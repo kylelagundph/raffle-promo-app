@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Raffle Promo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Admin-specific styles ── */
+    body { background: #0f172a; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+    .admin-login { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .login-card { background: #1e293b; border-radius: 16px; padding: 2.5rem; width: 100%; max-width: 380px; }
+    .login-card h1 { font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center; }
+    .admin-wrap { display: none; }
+
+    /* Layout */
+    .admin-header { background: #1e293b; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #334155; }
+    .admin-header h1 { font-size: 1.2rem; font-weight: 700; color: #f1f5f9; }
+    .admin-nav { display: flex; gap: .5rem; }
+    .nav-btn { background: transparent; border: 1px solid #475569; color: #94a3b8; padding: .4rem .9rem; border-radius: 8px; cursor: pointer; font-size: .85rem; transition: all .2s; }
+    .nav-btn.active, .nav-btn:hover { background: #3b82f6; border-color: #3b82f6; color: #fff; }
+    .admin-content { padding: 2rem; max-width: 1400px; margin: 0 auto; }
+
+    /* Tabs */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Stats */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: #1e293b; border-radius: 12px; padding: 1.25rem; text-align: center; }
+    .stat-num { font-size: 2.5rem; font-weight: 800; color: #3b82f6; }
+    .stat-label { font-size: .8rem; color: #64748b; margin-top: .25rem; text-transform: uppercase; letter-spacing: .05em; }
+
+    /* Table */
+    .table-toolbar { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
+    .filter-select, .search-input { background: #1e293b; border: 1px solid #334155; color: #e2e8f0; padding: .5rem .8rem; border-radius: 8px; font-size: .875rem; }
+    .btn-download { background: #16a34a; color: #fff; border: none; padding: .5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: .875rem; }
+    .btn-refresh { background: #334155; color: #e2e8f0; border: none; padding: .5rem 1rem; border-radius: 8px; cursor: pointer; font-size: .875rem; }
+    .table-wrap { overflow-x: auto; border-radius: 12px; }
+    table { width: 100%; border-collapse: collapse; background: #1e293b; font-size: .875rem; }
+    th { background: #0f172a; color: #64748b; padding: .75rem 1rem; text-align: left; font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; }
+    td { padding: .75rem 1rem; border-bottom: 1px solid #1e293b; color: #cbd5e1; }
+    tr:hover td { background: #263249; }
+    .badge { display: inline-block; padding: .2em .6em; border-radius: 999px; font-size: .75rem; font-weight: 600; }
+    .badge-verified { background: #14532d; color: #4ade80; }
+    .badge-pending  { background: #1c1917; color: #fbbf24; }
+    .badge-rejected { background: #450a0a; color: #f87171; }
+    .receipt-link { color: #60a5fa; text-decoration: none; font-size: .75rem; }
+    .receipt-link:hover { text-decoration: underline; }
+
+    /* Settings */
+    .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    @media (max-width: 700px) { .settings-grid { grid-template-columns: 1fr; } }
+    .settings-card { background: #1e293b; border-radius: 12px; padding: 1.5rem; }
+    .settings-card h3 { font-size: 1rem; margin-bottom: 1rem; color: #f1f5f9; }
+    .settings-field { margin-bottom: 1rem; }
+    .settings-field label { display: block; font-size: .8rem; color: #64748b; margin-bottom: .4rem; text-transform: uppercase; letter-spacing: .05em; }
+    .settings-field input, .settings-field textarea { width: 100%; background: #0f172a; border: 1px solid #334155; color: #e2e8f0; padding: .6rem .8rem; border-radius: 8px; font-size: .9rem; }
+    .settings-field textarea { min-height: 80px; resize: vertical; }
+    .btn-save { background: #3b82f6; color: #fff; border: none; padding: .6rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; margin-top: .5rem; }
+    .btn-save:hover { background: #2563eb; }
+    .save-msg { color: #4ade80; font-size: .85rem; margin-left: .75rem; }
+
+    /* Raffle Draw */
+    .draw-section { text-align: center; }
+    .pool-info { color: #94a3b8; margin-bottom: 2rem; font-size: 1rem; }
+    .pool-info strong { color: #60a5fa; font-size: 1.4rem; }
+    .slot-machine { background: #1e293b; border-radius: 20px; padding: 3rem 2rem; max-width: 500px; margin: 0 auto 2rem; position: relative; overflow: hidden; border: 2px solid #334155; }
+    .slot-machine.spinning { border-color: #f59e0b; box-shadow: 0 0 30px rgba(245,158,11,.3); }
+    .slot-reel { font-size: 1.5rem; font-weight: 800; color: #f1f5f9; min-height: 60px; display: flex; align-items: center; justify-content: center; transition: all .1s; }
+    .slot-reel.spinning { animation: spin-reel .08s infinite; }
+    @keyframes spin-reel { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+    .winner-reveal { display: none; text-align: center; padding: 2rem; background: linear-gradient(135deg, #14532d, #166534); border-radius: 16px; margin-top: 1.5rem; }
+    .winner-reveal.show { display: block; animation: winner-pop .5s ease; }
+    @keyframes winner-pop { 0% { transform: scale(.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    .winner-name { font-size: 2rem; font-weight: 800; color: #4ade80; margin: .5rem 0; }
+    .winner-details { font-size: .9rem; color: #86efac; }
+    .btn-draw { background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; border: none; padding: 1rem 3rem; border-radius: 12px; font-size: 1.2rem; font-weight: 800; cursor: pointer; margin: 1rem .5rem; transition: transform .2s; }
+    .btn-draw:hover { transform: scale(1.05); }
+    .btn-draw:disabled { opacity: .5; cursor: default; transform: none; }
+    .btn-draw-again { background: #3b82f6; color: #fff; border: none; padding: .75rem 2rem; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 1rem; }
+    .confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
+    .confetti-piece { position: absolute; width: 10px; height: 10px; top: -10px; animation: fall linear forwards; border-radius: 2px; }
+    @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+
+    /* Past draws */
+    .draws-list { background: #1e293b; border-radius: 12px; overflow: hidden; }
+    .draw-item { padding: 1rem 1.5rem; border-bottom: 1px solid #334155; }
+    .draw-item:last-child { border-bottom: none; }
+    .draw-winner-name { font-weight: 700; color: #4ade80; font-size: 1rem; }
+    .draw-meta { font-size: .8rem; color: #64748b; margin-top: .25rem; }
+
+    /* Admin form controls */
+    .admin-input { background: #1e293b; border: 1px solid #334155; color: #e2e8f0; padding: .5rem .8rem; border-radius: 8px; font-size: .9rem; width: 100%; margin-bottom: .5rem; }
+    .btn-admin-action { background: #3b82f6; color: #fff; border: none; padding: .5rem 1.2rem; border-radius: 8px; cursor: pointer; font-size: .875rem; font-weight: 600; }
+    .btn-logout { background: #7f1d1d; color: #fca5a5; border: none; padding: .4rem .9rem; border-radius: 8px; cursor: pointer; font-size: .85rem; }
+  </style>
+</head>
+<body>
+
+<!-- ── Login Screen ────────────────────────────────────────── -->
+<div class="admin-login" id="loginScreen">
+  <div class="login-card">
+    <h1>🔐 Admin Login</h1>
+    <div id="loginError" style="color:#f87171;margin-bottom:1rem;display:none;"></div>
+    <input type="password" id="loginPw" class="admin-input" placeholder="Admin password" autofocus>
+    <button class="btn-save" style="width:100%;margin-top:1rem;" onclick="doLogin()">Login</button>
+  </div>
+</div>
+
+<!-- ── Admin App ───────────────────────────────────────────── -->
+<div class="admin-wrap" id="adminWrap">
+  <div class="admin-header">
+    <h1>🎟️ Raffle Admin</h1>
+    <div class="admin-nav">
+      <button class="nav-btn active" onclick="showTab('entries')">📋 Entries</button>
+      <button class="nav-btn" onclick="showTab('draw')">🎰 Draw</button>
+      <button class="nav-btn" onclick="showTab('settings')">⚙️ Settings</button>
+      <button class="btn-logout" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="admin-content">
+
+    <!-- ENTRIES TAB -->
+    <div class="tab-panel active" id="tab-entries">
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num" id="statTotal">–</div><div class="stat-label">Total Entries</div></div>
+        <div class="stat-card"><div class="stat-num" id="statVerified" style="color:#4ade80;">–</div><div class="stat-label">Verified</div></div>
+        <div class="stat-card"><div class="stat-num" id="statPending" style="color:#fbbf24;">–</div><div class="stat-label">Pending</div></div>
+        <div class="stat-card"><div class="stat-num" id="statRejected" style="color:#f87171;">–</div><div class="stat-label">Rejected</div></div>
+      </div>
+
+      <div class="table-toolbar">
+        <select class="filter-select" id="statusFilter" onchange="loadEntries()">
+          <option value="">All Statuses</option>
+          <option value="verified">Verified</option>
+          <option value="pending">Pending</option>
+          <option value="rejected">Rejected</option>
+        </select>
+        <button class="btn-refresh" onclick="loadEntries()">🔄 Refresh</button>
+        <button class="btn-download" onclick="downloadCSV()">⬇️ Download CSV</button>
+      </div>
+
+      <div class="table-wrap">
+        <table id="entriesTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Date of Purchase</th>
+              <th>Invoice No.</th>
+              <th>Status</th>
+              <th>Submitted</th>
+              <th>Receipt</th>
+            </tr>
+          </thead>
+          <tbody id="entriesBody">
+            <tr><td colspan="9" style="text-align:center;color:#475569;padding:2rem;">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="entryCount" style="color:#64748b;font-size:.85rem;margin-top:.75rem;"></div>
+    </div>
+
+    <!-- DRAW TAB -->
+    <div class="tab-panel" id="tab-draw">
+      <div class="draw-section">
+        <h2 style="margin-bottom:.5rem;">🎰 Raffle Draw</h2>
+        <p class="pool-info">Eligible entries: <strong id="poolCount">–</strong></p>
+
+        <div class="slot-machine" id="slotMachine">
+          <div class="slot-reel" id="slotReel">Press Draw to start!</div>
+        </div>
+
+        <button class="btn-draw" id="drawBtn" onclick="startDraw()">🎲 Draw Winner!</button>
+
+        <div class="winner-reveal" id="winnerReveal">
+          <div style="font-size:2rem;">🎉🏆🎉</div>
+          <div style="color:#86efac;font-size:.9rem;margin-bottom:.5rem;">WINNER</div>
+          <div class="winner-name" id="winnerName"></div>
+          <div class="winner-details" id="winnerDetails"></div>
+          <button class="btn-draw-again" onclick="resetDraw()">Draw Again</button>
+        </div>
+
+        <div style="margin-top:3rem;text-align:left;">
+          <h3 style="margin-bottom:1rem;color:#94a3b8;">Past Draws</h3>
+          <div class="draws-list" id="drawsList">
+            <div style="padding:1.5rem;color:#475569;text-align:center;">No draws yet.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div class="tab-panel" id="tab-settings">
+      <div class="settings-grid">
+        <div class="settings-card">
+          <h3>📅 Campaign Period</h3>
+          <div class="settings-field">
+            <label>Start Date</label>
+            <input type="date" id="set_campaign_start_date" class="admin-input">
+          </div>
+          <div class="settings-field">
+            <label>End Date</label>
+            <input type="date" id="set_campaign_end_date" class="admin-input">
+          </div>
+          <div class="settings-field">
+            <label>Draw Date</label>
+            <input type="date" id="set_draw_date" class="admin-input">
+          </div>
+          <button class="btn-save" onclick="saveSettings(['campaign_start_date','campaign_end_date','draw_date'])">Save Dates</button>
+          <span class="save-msg" id="save_msg_dates"></span>
+        </div>
+
+        <div class="settings-card">
+          <h3>🏆 Prize & Promo</h3>
+          <div class="settings-field">
+            <label>Promo Title</label>
+            <input type="text" id="set_promo_title" class="admin-input" placeholder="Win a Trip to Korea!">
+          </div>
+          <div class="settings-field">
+            <label>Prize Description</label>
+            <textarea id="set_prize_description" class="admin-input"></textarea>
+          </div>
+          <button class="btn-save" onclick="saveSettings(['promo_title','prize_description'])">Save Prize</button>
+          <span class="save-msg" id="save_msg_prize"></span>
+        </div>
+
+        <div class="settings-card">
+          <h3>🧾 Receipt Validation</h3>
+          <div class="settings-field">
+            <label>Required Product Keywords</label>
+            <input type="text" id="set_required_product_keywords" class="admin-input" placeholder="BLT,BLT sandwich">
+            <small style="color:#64748b;">Comma-separated. Receipt must contain at least one keyword.</small>
+          </div>
+          <button class="btn-save" onclick="saveSettings(['required_product_keywords'])">Save Keywords</button>
+          <span class="save-msg" id="save_msg_keywords"></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Confetti container -->
+<div class="confetti-container" id="confettiContainer"></div>
+
+<script>
+const API = '';
+let adminPw = '';
+let drawPool = [];
+let spinInterval = null;
+
+// ── Auth ──────────────────────────────────────────────────────
+async function doLogin() {
+  const pw = document.getElementById('loginPw').value;
+  const err = document.getElementById('loginError');
+  try {
+    const r = await fetch(`${API}/api/admin/login`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({password: pw})
+    });
+    if (r.ok) {
+      adminPw = pw;
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminWrap').style.display = 'block';
+      loadStats();
+      loadEntries();
+      loadSettings();
+      loadDrawPool();
+      loadPastDraws();
+    } else {
+      err.textContent = 'Wrong password.';
+      err.style.display = 'block';
+    }
+  } catch(e) {
+    err.textContent = 'Connection error.';
+    err.style.display = 'block';
+  }
+}
+
+function logout() {
+  adminPw = '';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('adminWrap').style.display = 'none';
+}
+
+document.getElementById('loginPw')?.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+// ── Navigation ────────────────────────────────────────────────
+function showTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + tab)?.classList.add('active');
+  event.target.classList.add('active');
+
+  if (tab === 'draw') { loadDrawPool(); loadPastDraws(); }
+  if (tab === 'settings') loadSettings();
+  if (tab === 'entries') { loadStats(); loadEntries(); }
+}
+
+// ── Stats ─────────────────────────────────────────────────────
+async function loadStats() {
+  try {
+    const r = await apiFetch('/api/admin/stats');
+    const d = await r.json();
+    document.getElementById('statTotal').textContent    = d.total    ?? '–';
+    document.getElementById('statVerified').textContent = d.verified ?? '–';
+    document.getElementById('statPending').textContent  = d.pending  ?? '–';
+    document.getElementById('statRejected').textContent = d.rejected ?? '–';
+  } catch(e) {}
+}
+
+// ── Entries ───────────────────────────────────────────────────
+async function loadEntries() {
+  const status = document.getElementById('statusFilter')?.value || '';
+  const url = `/api/admin/entries?limit=200${status ? '&status=' + status : ''}`;
+  try {
+    const r = await apiFetch(url);
+    const d = await r.json();
+    renderEntries(d.entries || []);
+    const count = document.getElementById('entryCount');
+    if (count) count.textContent = `Showing ${(d.entries||[]).length} of ${d.total} entries`;
+  } catch(e) {
+    document.getElementById('entriesBody').innerHTML = '<tr><td colspan="9" style="text-align:center;color:#f87171;">Failed to load entries.</td></tr>';
+  }
+}
+
+function renderEntries(entries) {
+  const tbody = document.getElementById('entriesBody');
+  if (!entries.length) {
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#475569;padding:2rem;">No entries found.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = entries.map((e, i) => `
+    <tr>
+      <td style="color:#475569;">${i+1}</td>
+      <td><strong style="color:#f1f5f9;">${esc(e.name)}</strong></td>
+      <td>${esc(e.email)}</td>
+      <td>${esc(e.phone)}</td>
+      <td>${e.purchase_date || '–'}</td>
+      <td><code style="font-family:monospace;color:#a5b4fc;">${esc(e.invoice_number||'–')}</code></td>
+      <td><span class="badge badge-${e.verification_status}">${e.verification_status}</span></td>
+      <td style="color:#64748b;font-size:.8rem;">${fmtDate(e.created_at)}</td>
+      <td>${e.receipt_url ? `<a href="${esc(e.receipt_url)}" target="_blank" class="receipt-link">View 🧾</a>` : '–'}</td>
+    </tr>
+  `).join('');
+}
+
+async function downloadCSV() {
+  const status = document.getElementById('statusFilter')?.value || '';
+  const url = `/api/admin/entries/csv${status ? '?status=' + status : ''}`;
+  const r = await apiFetch(url);
+  const blob = await r.blob();
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'raffle_entries.csv';
+  a.click();
+}
+
+// ── Settings ──────────────────────────────────────────────────
+async function loadSettings() {
+  try {
+    const r = await apiFetch('/api/admin/settings');
+    const s = await r.json();
+    Object.entries(s).forEach(([k,v]) => {
+      const el = document.getElementById('set_' + k);
+      if (el) el.value = v;
+    });
+  } catch(e) {}
+}
+
+async function saveSettings(keys) {
+  const body = {};
+  keys.forEach(k => { const el = document.getElementById('set_' + k); if (el) body[k] = el.value; });
+  try {
+    const r = await apiFetch('/api/admin/settings', 'POST', body);
+    if (r.ok) {
+      const msgKey = keys.includes('campaign_start_date') ? 'dates' : keys.includes('promo_title') ? 'prize' : 'keywords';
+      const msg = document.getElementById('save_msg_' + msgKey);
+      if (msg) { msg.textContent = '✓ Saved'; setTimeout(() => msg.textContent = '', 3000); }
+    }
+  } catch(e) {}
+}
+
+// ── Draw ──────────────────────────────────────────────────────
+async function loadDrawPool() {
+  try {
+    const r = await apiFetch('/api/admin/draw/pool');
+    const d = await r.json();
+    drawPool = d.entries || [];
+    document.getElementById('poolCount').textContent = drawPool.length;
+    const reel = document.getElementById('slotReel');
+    if (reel && !drawPool.length) reel.textContent = 'No verified entries yet';
+  } catch(e) {}
+}
+
+async function loadPastDraws() {
+  try {
+    const r = await apiFetch('/api/admin/draws');
+    const d = await r.json();
+    const draws = d.draws || [];
+    const container = document.getElementById('drawsList');
+    if (!draws.length) {
+      container.innerHTML = '<div style="padding:1.5rem;color:#475569;text-align:center;">No draws yet.</div>';
+      return;
+    }
+    container.innerHTML = draws.map(draw => {
+      const w = draw.entries || {};
+      return `<div class="draw-item">
+        <div class="draw-winner-name">🏆 ${esc(w.name || 'Unknown')}</div>
+        <div class="draw-meta">${esc(w.email||'')} · ${esc(w.phone||'')} · Invoice: ${esc(w.invoice_number||'–')}</div>
+        <div class="draw-meta" style="margin-top:.25rem;">Drawn: ${fmtDate(draw.drawn_at)}</div>
+      </div>`;
+    }).join('');
+  } catch(e) {}
+}
+
+function startDraw() {
+  if (!drawPool.length) { alert('No verified entries to draw from!'); return; }
+
+  document.getElementById('winnerReveal').classList.remove('show');
+  document.getElementById('drawBtn').disabled = true;
+  const machine = document.getElementById('slotMachine');
+  const reel = document.getElementById('slotReel');
+
+  machine.classList.add('spinning');
+  reel.classList.add('spinning');
+
+  let ticks = 0;
+  const totalTicks = 40;
+  spinInterval = setInterval(() => {
+    const random = drawPool[Math.floor(Math.random() * drawPool.length)];
+    reel.textContent = random.name;
+    ticks++;
+    if (ticks >= totalTicks) {
+      clearInterval(spinInterval);
+      finalDraw();
+    }
+  }, 80);
+}
+
+async function finalDraw() {
+  const machine = document.getElementById('slotMachine');
+  const reel = document.getElementById('slotReel');
+  machine.classList.remove('spinning');
+  reel.classList.remove('spinning');
+
+  try {
+    const r = await apiFetch('/api/admin/draw', 'POST', {});
+    if (!r.ok) { alert('Draw failed.'); document.getElementById('drawBtn').disabled = false; return; }
+    const d = await r.json();
+    const w = d.winner;
+
+    reel.textContent = w.name;
+    document.getElementById('winnerName').textContent = w.name;
+    document.getElementById('winnerDetails').innerHTML = `
+      📧 ${esc(w.email)} &nbsp;|&nbsp; 📱 ${esc(w.phone)}<br>
+      🧾 Invoice: <strong>${esc(w.invoice_number||'–')}</strong>
+    `;
+    document.getElementById('winnerReveal').classList.add('show');
+    launchConfetti();
+    loadPastDraws();
+    loadDrawPool();
+  } catch(e) {
+    alert('Error running draw: ' + e.message);
+    document.getElementById('drawBtn').disabled = false;
+  }
+}
+
+function resetDraw() {
+  document.getElementById('winnerReveal').classList.remove('show');
+  document.getElementById('slotReel').textContent = 'Press Draw to start!';
+  document.getElementById('drawBtn').disabled = false;
+}
+
+// ── Confetti ──────────────────────────────────────────────────
+function launchConfetti() {
+  const container = document.getElementById('confettiContainer');
+  const colors = ['#f59e0b','#3b82f6','#10b981','#ef4444','#8b5cf6','#ec4899','#fff'];
+  container.innerHTML = '';
+  for (let i = 0; i < 120; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.cssText = `
+      left: ${Math.random() * 100}%;
+      background: ${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration: ${1.5 + Math.random() * 2}s;
+      animation-delay: ${Math.random() * .5}s;
+      width: ${6 + Math.random()*8}px;
+      height: ${6 + Math.random()*8}px;
+      border-radius: ${Math.random() > .5 ? '50%' : '2px'};
+    `;
+    container.appendChild(piece);
+  }
+  setTimeout(() => container.innerHTML = '', 4000);
+}
+
+// ── Helpers ───────────────────────────────────────────────────
+function apiFetch(url, method = 'GET', body = null) {
+  const opts = {
+    method,
+    headers: { 'X-Admin-Password': adminPw, 'Content-Type': 'application/json' },
+  };
+  if (body) opts.body = JSON.stringify(body);
+  return fetch(API + url, opts);
+}
+
+function esc(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function fmtDate(isoStr) {
+  if (!isoStr) return '–';
+  try { return new Date(isoStr).toLocaleString('en-PH', {dateStyle:'short',timeStyle:'short'}); }
+  catch { return isoStr; }
+}
+</script>
+</body>
+</html>

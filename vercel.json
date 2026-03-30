@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "frontend/*.html", "use": "@vercel/static" },
+    { "src": "frontend/*.css",  "use": "@vercel/static" },
+    { "src": "frontend/*.js",   "use": "@vercel/static" },
+    { "src": "backend/api/*.py","use": "@vercel/python" }
+  ],
+  "routes": [
+    { "src": "/",                     "dest": "/frontend/index.html" },
+    { "src": "/admin",                "dest": "/frontend/admin.html" },
+    { "src": "/admin.html",           "dest": "/frontend/admin.html" },
+    { "src": "/style.css",            "dest": "/frontend/style.css"  },
+    { "src": "/app.js",               "dest": "/frontend/app.js"     },
+    { "src": "/api/settings",         "dest": "/backend/api/settings.py" },
+    { "src": "/api/submit",           "dest": "/backend/api/submit.py"   },
+    { "src": "/api/admin/(.*)",       "dest": "/backend/api/admin.py"    },
+    { "src": "/api/admin/draw/pool",  "dest": "/backend/api/admin.py"    },
+    { "src": "/api/admin/draw",       "dest": "/backend/api/admin.py"    }
+  ],
+  "env": {
+    "GOOGLE_VISION_API_KEY": "@google_vision_api_key",
+    "SUPABASE_URL":          "@supabase_url",
+    "SUPABASE_KEY":          "@supabase_key",
+    "ADMIN_PASSWORD":        "@admin_password"
+  }
+}
