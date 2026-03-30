@@ -195,7 +195,7 @@ if (form) {
       const r = await fetch(`${API_BASE}/api/submit`, { method: 'POST', body: fd });
       const data = await r.json();
 
-      if (r.ok && data.success) {
+      if ((r.ok || r.status === 202) && data.success) {
         // Success
         document.getElementById('step2')?.classList.add('done');
         document.getElementById('step3')?.classList.add('active', 'done');

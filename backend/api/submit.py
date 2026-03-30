@@ -142,25 +142,36 @@ async def submit_entry(
     except Exception as e:
         raise HTTPException(500, f"Database error: {e}")
 
-    # 7. Run OCR verification inline (serverless — no background tasks)
-    await _verify_async(entry["id"], receipt_bytes, purchase_date)
+    # 7. Run OCR verification inline and return result to user
+    is_valid, rejection_reason = await _verify_and_update(entry["id"], receipt_bytes, purchase_date)
+
+    if not is_valid:
+        # Return rejection message directly to user
+        user_message = "Entry is invalid — Promo Product not found."
+        if rejection_reason and "date" in rejection_reason.lower():
+            user_message = f"Entry is invalid — {rejection_reason}"
+        elif rejection_reason and "read" in rejection_reason.lower():
+            user_message = "Entry is invalid — Receipt image could not be read clearly. Please upload a clearer photo."
+        return JSONResponse(status_code=422, content={
+            "success": False,
+            "message": user_message,
+            "entry_id": entry["id"],
+        })
 
     return JSONResponse(status_code=202, content={
         "success":  True,
-        "message":  "Your entry has been received and is being verified. Good luck!",
+        "message":  "You're in the draw! Good luck! 🇰🇷",
         "entry_id": entry["id"],
     })
 
 
-async def _verify_async(entry_id: str, image_bytes: bytes, submitted_date: str):
-    """Run OCR + verification in background."""
+async def _verify_and_update(entry_id: str, image_bytes: bytes, submitted_date: str):
+    """Run OCR + verification inline. Returns (is_valid, rejection_reason)."""
     try:
         from lib.ocr import extract_text_from_image, parse_receipt, verify_receipt_with_settings
 
         raw_text = await extract_text_from_image(image_bytes)
         extracted_data = parse_receipt(raw_text)
-
-        # Cross-check OCR date vs submitted date (soft check — warn but don't reject if OCR can't find date)
         extracted_data["submitted_purchase_date"] = submitted_date
 
         is_valid, rejection_reason = await verify_receipt_with_settings(raw_text, extracted_data)
@@ -172,9 +183,11 @@ async def _verify_async(entry_id: str, image_bytes: bytes, submitted_date: str):
             extracted_data=extracted_data,
             rejection_reason=rejection_reason,
         )
+        return is_valid, rejection_reason
     except Exception as exc:
         db.update_entry_verification(
             entry_id=entry_id,
             status="pending",
             rejection_reason=f"Verification error (manual review needed): {exc}",
         )
+        return True, None  # Don't block user on technical errors
