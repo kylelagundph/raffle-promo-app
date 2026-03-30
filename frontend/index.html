@@ -94,13 +94,15 @@
     <div class="hero-bg-overlay"></div>
     <div class="hero-content container">
       <div class="subway-brand">
-        <img class="subway-logo-svg"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Subway_2016_logo.svg/320px-Subway_2016_logo.svg.png"
-          alt="Subway">
+        <!-- Subway logo SVG inline -->
+        <svg class="subway-logo-svg" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Subway">
+          <rect width="400" height="120" rx="12" fill="#009B48"/>
+          <text x="200" y="88" font-family="'Arial Black','Arial',sans-serif" font-weight="900" font-size="72" fill="#FFC600" text-anchor="middle" letter-spacing="-2">SUBWAY</text>
+        </svg>
         <span class="hero-x-divider">×</span>
         <span class="korea-flag-hero">🇰🇷</span>
       </div>
-      <p class="subway-tagline">Chicken Bulgogi Promo</p>
+      <p class="subway-tagline">The Chicken Bulgogi Promo</p>
       <h1>Win a Trip to <span class="korea-text">Korea!</span><br><span style="font-size:.65em;opacity:.9;">for 2!</span></h1>
       <div class="hero-prize-details">
         <span>✈️ Flights</span>
@@ -222,7 +224,25 @@
     <section class="card fade-in">
       <h2>How to Enter</h2>
       <div class="steps-list">
-        <div class="step-item"><div class="step-circle">🥪</div><div><strong>Buy a Subway Chicken Bulgogi</strong><br><small>At any participating Subway outlet</small></div></div>
+        <div class="step-item">
+          <div class="step-circle" style="background:#009B48;padding:6px;">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+              <!-- Bread top -->
+              <ellipse cx="32" cy="14" rx="28" ry="10" fill="#F5C842"/>
+              <ellipse cx="32" cy="16" rx="28" ry="7" fill="#E8A820"/>
+              <!-- Lettuce -->
+              <ellipse cx="32" cy="24" rx="29" ry="5" fill="#4CAF50"/>
+              <!-- Chicken filling -->
+              <ellipse cx="32" cy="30" rx="27" ry="5" fill="#F4A261"/>
+              <!-- Sauce -->
+              <ellipse cx="32" cy="35" rx="26" ry="3" fill="#E76F51" opacity=".8"/>
+              <!-- Bread bottom -->
+              <ellipse cx="32" cy="40" rx="28" ry="8" fill="#E8A820"/>
+              <ellipse cx="32" cy="44" rx="28" ry="6" fill="#D4901A"/>
+            </svg>
+          </div>
+          <div><strong>Buy a Subway Chicken Bulgogi</strong><br><small>At any participating Subway outlet</small></div>
+        </div>
         <div class="step-item"><div class="step-circle">📱</div><div><strong>Fill in this form</strong><br><small>Enter your details and receipt info</small></div></div>
         <div class="step-item"><div class="step-circle">🧾</div><div><strong>Upload your receipt</strong><br><small>Clear photo showing Chicken Bulgogi and OR number</small></div></div>
         <div class="step-item"><div class="step-circle">🎲</div><div><strong>Wait for the draw!</strong><br><small>Winner notified by email and phone</small></div></div>
@@ -344,7 +364,10 @@
 
   <footer>
     <div class="subway-brand" style="margin-bottom:.5rem;">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Subway_2016_logo.svg/200px-Subway_2016_logo.svg.png" alt="Subway" style="height:28px;filter:brightness(0) invert(1);opacity:.8;">
+      <svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" style="height:28px;border-radius:4px;">
+        <rect width="400" height="120" rx="12" fill="#009B48"/>
+        <text x="200" y="88" font-family="'Arial Black','Arial',sans-serif" font-weight="900" font-size="72" fill="#FFC600" text-anchor="middle" letter-spacing="-2">SUBWAY</text>
+      </svg>
       <div>🇰🇷</div>
     </div>
     <div class="footer-brand">SUBWAY PROMO TRIP TO KOREA</div>
