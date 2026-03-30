@@ -19,24 +19,41 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: .6rem;
+      gap: 1rem;
+      margin-bottom: .5rem;
+    }
+    .subway-logo-svg {
+      height: 48px;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,.3));
+    }
+    .hero-x-divider {
+      font-size: 1.8rem;
+      color: rgba(255,255,255,.6);
+      font-weight: 300;
+    }
+    .korea-flag-hero { font-size: 2.8rem; }
+    .subway-tagline {
+      font-size: .9rem;
+      color: rgba(255,255,255,.85);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      font-weight: 600;
       margin-bottom: .75rem;
     }
-    .subway-logo-text {
-      font-size: 2rem;
-      font-weight: 900;
-      color: var(--subway-yellow);
-      letter-spacing: -.5px;
-      text-shadow: 2px 2px 0 rgba(0,0,0,.3);
-      font-family: 'Inter', sans-serif;
+    .hero-prize-details {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .5rem .75rem;
+      margin: .75rem 0;
+      font-size: .9rem;
     }
-    .subway-logo-text span { color: #fff; }
-    .subway-tagline {
-      font-size: .85rem;
-      color: rgba(255,255,255,.7);
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      margin-bottom: .5rem;
+    .hero-prize-details span {
+      background: rgba(255,255,255,.15);
+      border-radius: 999px;
+      padding: .3rem .8rem;
+      backdrop-filter: blur(4px);
     }
     /* Accordion for T&C and Privacy */
     .accordion-section { margin-bottom: 1rem; }
@@ -77,16 +94,23 @@
     <div class="hero-bg-overlay"></div>
     <div class="hero-content container">
       <div class="subway-brand">
-        <div class="subway-logo-text">SUBWAY<span>®</span></div>
-        <div style="color:rgba(255,255,255,.5);font-size:1.5rem;">×</div>
-        <div style="font-size:2rem;">🇰🇷</div>
+        <img class="subway-logo-svg"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Subway_2016_logo.svg/320px-Subway_2016_logo.svg.png"
+          alt="Subway">
+        <span class="hero-x-divider">×</span>
+        <span class="korea-flag-hero">🇰🇷</span>
       </div>
-      <p class="subway-tagline">Subway Promo</p>
-      <h1>Win a Trip to <span class="korea-text">Korea!</span></h1>
-      <p id="heroSubtitle">Buy a Subway BLT, upload your receipt, and join the draw!</p>
+      <p class="subway-tagline">Chicken Bulgogi Promo</p>
+      <h1>Win a Trip to <span class="korea-text">Korea!</span><br><span style="font-size:.65em;opacity:.9;">for 2!</span></h1>
+      <div class="hero-prize-details">
+        <span>✈️ Flights</span>
+        <span>🏨 Hotel</span>
+        <span>🗺️ Tour</span>
+        <span>💰 ₩250,000 pocket money</span>
+      </div>
+      <p id="heroSubtitle">Buy a Chicken Bulgogi, upload your receipt, and join the draw!</p>
       <div class="hero-meta">
         <span id="heroDates">🗓️ Loading...</span>
-        <span id="heroPrize">🎁 Loading prize details...</span>
       </div>
     </div>
     <div class="hero-wave">
@@ -97,7 +121,6 @@
   <main class="container">
     <div class="card fade-in" id="formCard">
       <div class="card-header">
-        <div class="card-icon">🎟️</div>
         <h2>Enter the Draw</h2>
         <p id="formSubheading">Fill in your details and upload your Subway receipt</p>
       </div>
@@ -156,7 +179,7 @@
             <input type="file" id="receipt" name="receipt" accept=".jpg,.jpeg,.png,.heic,.heif,image/jpeg,image/png,image/heic,image/heif" required>
             <span class="upload-icon">🧾</span>
             <div class="upload-title">Tap to upload your Subway receipt</div>
-            <div class="upload-sub">JPG, PNG, HEIC · Max 10 MB · Must show BLT sandwich</div>
+            <div class="upload-sub">JPG, PNG, HEIC · Max 10 MB · Must show Chicken Bulgogi</div>
             <div class="upload-preview" id="uploadPreview" style="display:none;">
               <img id="previewImg" src="" alt="Receipt preview">
               <div class="upload-filename" id="uploadFilename"></div>
@@ -199,9 +222,9 @@
     <section class="card fade-in">
       <h2>How to Enter</h2>
       <div class="steps-list">
-        <div class="step-item"><div class="step-circle">🥪</div><div><strong>Buy a Subway BLT sandwich</strong><br><small>At any participating Subway outlet</small></div></div>
+        <div class="step-item"><div class="step-circle">🥪</div><div><strong>Buy a Subway Chicken Bulgogi</strong><br><small>At any participating Subway outlet</small></div></div>
         <div class="step-item"><div class="step-circle">📱</div><div><strong>Fill in this form</strong><br><small>Enter your details and receipt info</small></div></div>
-        <div class="step-item"><div class="step-circle">🧾</div><div><strong>Upload your receipt</strong><br><small>Clear photo showing BLT and OR number</small></div></div>
+        <div class="step-item"><div class="step-circle">🧾</div><div><strong>Upload your receipt</strong><br><small>Clear photo showing Chicken Bulgogi and OR number</small></div></div>
         <div class="step-item"><div class="step-circle">🎲</div><div><strong>Wait for the draw!</strong><br><small>Winner notified by email and phone</small></div></div>
       </div>
     </section>
@@ -321,7 +344,7 @@
 
   <footer>
     <div class="subway-brand" style="margin-bottom:.5rem;">
-      <div style="font-size:1.25rem;font-weight:900;color:var(--subway-yellow,#FFC600);">SUBWAY<span style="color:#fff;">®</span></div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Subway_2016_logo.svg/200px-Subway_2016_logo.svg.png" alt="Subway" style="height:28px;filter:brightness(0) invert(1);opacity:.8;">
       <div>🇰🇷</div>
     </div>
     <div class="footer-brand">SUBWAY PROMO TRIP TO KOREA</div>
