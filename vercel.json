@@ -18,6 +18,7 @@
     { "src": "/subway-logo.png",     "dest": "/frontend/subway-logo.png" },
     { "src": "/api/settings",        "dest": "/backend/api/settings.py" },
     { "src": "/api/submit",          "dest": "/backend/api/submit.py"   },
+    { "src": "/api/admin/entries/([^/]+)", "dest": "/backend/api/admin.py" },
     { "src": "/api/admin/(.*)",      "dest": "/backend/api/admin.py"    },
     { "src": "/api/admin/draw/pool", "dest": "/backend/api/admin.py"    },
     { "src": "/api/admin/draw",      "dest": "/backend/api/admin.py"    }

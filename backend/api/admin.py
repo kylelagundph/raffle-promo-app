@@ -72,21 +72,6 @@ async def list_entries(
     return {"entries": entries, "total": total, "limit": limit, "offset": offset}
 
 
-# ── CSV export ────────────────────────────────────────────────
-@app.delete("/api/admin/entries/{entry_id}")
-async def delete_entry(
-    entry_id: str,
-    x_admin_password: Optional[str] = Header(None),
-):
-    _auth(x_admin_password)
-    try:
-        client = db.get_client()
-        client.table("entries").delete().eq("id", entry_id).execute()
-        return {"success": True, "deleted": entry_id}
-    except Exception as e:
-        raise HTTPException(500, f"Failed to delete entry: {e}")
-
-
 @app.get("/api/admin/entries/csv")
 async def export_csv(
     status:           Optional[str] = Query(None),
@@ -109,6 +94,21 @@ async def export_csv(
         media_type="text/csv",
         headers={"Content-Disposition": "attachment; filename=raffle_entries.csv"},
     )
+
+
+# ── Delete entry ──────────────────────────────────────────────
+@app.delete("/api/admin/entries/{entry_id}")
+async def delete_entry(
+    entry_id: str,
+    x_admin_password: Optional[str] = Header(None),
+):
+    _auth(x_admin_password)
+    try:
+        client = db.get_client()
+        client.table("entries").delete().eq("id", entry_id).execute()
+        return {"success": True, "deleted": entry_id}
+    except Exception as e:
+        raise HTTPException(500, f"Failed to delete entry: {e}")
 
 
 # ── Settings ──────────────────────────────────────────────────
