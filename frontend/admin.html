@@ -292,7 +292,7 @@ function logout() {
 
 document.getElementById('loginPw')?.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 
-// ── Navigation ────────────────────────────────────────────────
+// ── Navigation ────────────���───────────────────────────────────
 function showTab(tab) {
   document.querySelectorAll('.tab-panel').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
@@ -521,5 +521,9 @@ function fmtDate(isoStr) {
   catch { return isoStr; }
 }
 </script>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
