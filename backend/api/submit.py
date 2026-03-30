@@ -142,8 +142,8 @@ async def submit_entry(
     except Exception as e:
         raise HTTPException(500, f"Database error: {e}")
 
-    # 7. Trigger async OCR verification
-    asyncio.create_task(_verify_async(entry["id"], receipt_bytes, purchase_date))
+    # 7. Run OCR verification inline (serverless — no background tasks)
+    await _verify_async(entry["id"], receipt_bytes, purchase_date)
 
     return JSONResponse(status_code=202, content={
         "success":  True,
