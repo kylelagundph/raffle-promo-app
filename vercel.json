@@ -7,15 +7,15 @@
     { "src": "backend/api/*.py","use": "@vercel/python" }
   ],
   "routes": [
-    { "src": "/",                     "dest": "/frontend/index.html" },
-    { "src": "/admin",                "dest": "/frontend/admin.html" },
-    { "src": "/admin.html",           "dest": "/frontend/admin.html" },
-    { "src": "/style.css",            "dest": "/frontend/style.css"  },
-    { "src": "/app.js",               "dest": "/frontend/app.js"     },
-    { "src": "/api/settings",         "dest": "/backend/api/settings.py" },
-    { "src": "/api/submit",           "dest": "/backend/api/submit.py"   },
-    { "src": "/api/admin/(.*)",       "dest": "/backend/api/admin.py"    },
-    { "src": "/api/admin/draw/pool",  "dest": "/backend/api/admin.py"    },
-    { "src": "/api/admin/draw",       "dest": "/backend/api/admin.py"    }
-  ],
+    { "src": "/",                    "dest": "/frontend/index.html" },
+    { "src": "/admin",               "dest": "/frontend/admin.html" },
+    { "src": "/admin.html",          "dest": "/frontend/admin.html" },
+    { "src": "/style.css",           "dest": "/frontend/style.css"  },
+    { "src": "/app.js",              "dest": "/frontend/app.js"     },
+    { "src": "/api/settings",        "dest": "/backend/api/settings.py" },
+    { "src": "/api/submit",          "dest": "/backend/api/submit.py"   },
+    { "src": "/api/admin/(.*)",      "dest": "/backend/api/admin.py"    },
+    { "src": "/api/admin/draw/pool", "dest": "/backend/api/admin.py"    },
+    { "src": "/api/admin/draw",      "dest": "/backend/api/admin.py"    }
+  ]
 }
