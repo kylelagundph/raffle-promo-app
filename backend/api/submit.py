@@ -115,12 +115,8 @@ async def submit_entry(
     except fraud.FraudError as e:
         raise HTTPException(409, str(e))
 
-    # 4. Check duplicate receipt image
+    # 4. Compute MD5 hash for storage reference (no longer used for duplicate blocking)
     receipt_hash = storage.compute_md5(receipt_bytes)
-    try:
-        fraud.check_duplicate_receipt_image(receipt_hash)
-    except fraud.FraudError as e:
-        raise HTTPException(409, str(e))
 
     # 5. Upload receipt image to Supabase Storage
     try:
