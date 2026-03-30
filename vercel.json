@@ -18,10 +18,4 @@
     { "src": "/api/admin/draw/pool",  "dest": "/backend/api/admin.py"    },
     { "src": "/api/admin/draw",       "dest": "/backend/api/admin.py"    }
   ],
-  "env": {
-    "GOOGLE_VISION_API_KEY": "@google_vision_api_key",
-    "SUPABASE_URL":          "@supabase_url",
-    "SUPABASE_KEY":          "@supabase_key",
-    "ADMIN_PASSWORD":        "@admin_password"
-  }
 }
