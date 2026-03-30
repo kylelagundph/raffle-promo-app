@@ -26,7 +26,7 @@ from typing import Optional
 from lib import db
 
 app = FastAPI()
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["GET","POST","DELETE","OPTIONS"], allow_headers=["*"])
 
 
 def _auth(x_admin_password: Optional[str] = None) -> None:
@@ -73,6 +73,20 @@ async def list_entries(
 
 
 # ── CSV export ────────────────────────────────────────────────
+@app.delete("/api/admin/entries/{entry_id}")
+async def delete_entry(
+    entry_id: str,
+    x_admin_password: Optional[str] = Header(None),
+):
+    _auth(x_admin_password)
+    try:
+        client = db.get_client()
+        client.table("entries").delete().eq("id", entry_id).execute()
+        return {"success": True, "deleted": entry_id}
+    except Exception as e:
+        raise HTTPException(500, f"Failed to delete entry: {e}")
+
+
 @app.get("/api/admin/entries/csv")
 async def export_csv(
     status:           Optional[str] = Query(None),

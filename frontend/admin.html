@@ -157,6 +157,7 @@
               <th>Status</th>
               <th>Submitted</th>
               <th>Receipt</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody id="entriesBody">
@@ -335,11 +336,11 @@ async function loadEntries() {
 function renderEntries(entries) {
   const tbody = document.getElementById('entriesBody');
   if (!entries.length) {
-    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#475569;padding:2rem;">No entries found.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:#475569;padding:2rem;">No entries found.</td></tr>';
     return;
   }
   tbody.innerHTML = entries.map((e, i) => `
-    <tr>
+    <tr id="row-${esc(e.id)}">
       <td style="color:#475569;">${i+1}</td>
       <td><strong style="color:#f1f5f9;">${esc(e.name)}</strong></td>
       <td>${esc(e.email)}</td>
@@ -349,8 +350,21 @@ function renderEntries(entries) {
       <td><span class="badge badge-${e.verification_status}">${e.verification_status}</span></td>
       <td style="color:#64748b;font-size:.8rem;">${fmtDate(e.created_at)}</td>
       <td>${e.receipt_url ? `<a href="${esc(e.receipt_url)}" target="_blank" class="receipt-link">View 🧾</a>` : '–'}</td>
+      <td><button onclick="deleteEntry('${esc(e.id)}','${esc(e.name)}')" style="background:#7f1d1d;color:#fca5a5;border:none;padding:.3rem .7rem;border-radius:6px;cursor:pointer;font-size:.75rem;">Delete</button></td>
     </tr>
   `).join('');
+}
+
+async function deleteEntry(id, name) {
+  if (!confirm(`Delete entry for "${name}"? This cannot be undone.`)) return;
+  const r = await apiFetch(`/api/admin/entries/${id}`, 'DELETE');
+  if (r.ok) {
+    const row = document.getElementById(`row-${id}`);
+    if (row) row.remove();
+    loadStats();
+  } else {
+    alert('Failed to delete entry.');
+  }
 }
 
 async function downloadCSV() {
