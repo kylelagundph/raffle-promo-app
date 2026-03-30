@@ -3,25 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Win a Trip to Korea! 🇰🇷</title>
+  <title>Subway Promo — Win a Trip to Korea! 🇰🇷</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script defer src="/_vercel/insights/script.js"></script>
+  <style>
+    /* Subway brand colors */
+    :root {
+      --subway-green: #00843D;
+      --subway-yellow: #FFC600;
+    }
+    .subway-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .6rem;
+      margin-bottom: .75rem;
+    }
+    .subway-logo-text {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--subway-yellow);
+      letter-spacing: -.5px;
+      text-shadow: 2px 2px 0 rgba(0,0,0,.3);
+      font-family: 'Inter', sans-serif;
+    }
+    .subway-logo-text span { color: #fff; }
+    .subway-tagline {
+      font-size: .85rem;
+      color: rgba(255,255,255,.7);
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-bottom: .5rem;
+    }
+    /* Accordion for T&C and Privacy */
+    .accordion-section { margin-bottom: 1rem; }
+    .accordion-toggle {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #111827;
+    }
+    .accordion-toggle:hover { color: var(--subway-green, #00843D); }
+    .accordion-icon { font-size: 1.2rem; transition: transform .25s; }
+    .accordion-toggle.open .accordion-icon { transform: rotate(180deg); }
+    .accordion-body {
+      display: none;
+      padding: 1rem 0 .5rem;
+      font-size: .875rem;
+      color: #6b7280;
+      line-height: 1.7;
+    }
+    .accordion-body.open { display: block; }
+    .accordion-body h4 { font-size: .875rem; font-weight: 700; color: #374151; margin: 1rem 0 .35rem; }
+    .accordion-body ol, .accordion-body ul { padding-left: 1.25rem; margin: .5rem 0; }
+    .accordion-body li { margin-bottom: .35rem; }
+  </style>
 </head>
 <body>
 
   <header class="hero">
     <div class="hero-bg-overlay"></div>
     <div class="hero-content container">
-      <div class="hero-logos">
-        <div class="brand-logo" id="heroBrand">PROMO</div>
-        <div class="hero-x">×</div>
-        <div class="korea-flag">🇰🇷</div>
+      <div class="subway-brand">
+        <div class="subway-logo-text">SUBWAY<span>®</span></div>
+        <div style="color:rgba(255,255,255,.5);font-size:1.5rem;">×</div>
+        <div style="font-size:2rem;">🇰🇷</div>
       </div>
+      <p class="subway-tagline">Subway Promo</p>
       <h1>Win a Trip to <span class="korea-text">Korea!</span></h1>
-      <p id="heroSubtitle">Upload your receipt and join the raffle draw</p>
+      <p id="heroSubtitle">Buy a Subway BLT, upload your receipt, and join the draw!</p>
       <div class="hero-meta">
         <span id="heroDates">🗓️ Loading...</span>
         <span id="heroPrize">🎁 Loading prize details...</span>
@@ -37,7 +99,7 @@
       <div class="card-header">
         <div class="card-icon">🎟️</div>
         <h2>Enter the Draw</h2>
-        <p id="formSubheading">Fill in your details and upload your receipt</p>
+        <p id="formSubheading">Fill in your details and upload your Subway receipt</p>
       </div>
 
       <div class="steps" aria-label="Form steps">
@@ -93,8 +155,8 @@
           <div class="upload-area" id="uploadArea" role="button" tabindex="0" aria-label="Upload receipt">
             <input type="file" id="receipt" name="receipt" accept=".jpg,.jpeg,.png,.heic,.heif,image/jpeg,image/png,image/heic,image/heif" required>
             <span class="upload-icon">🧾</span>
-            <div class="upload-title">Tap to upload your receipt</div>
-            <div class="upload-sub">JPG, PNG, HEIC · Max 10 MB</div>
+            <div class="upload-title">Tap to upload your Subway receipt</div>
+            <div class="upload-sub">JPG, PNG, HEIC · Max 10 MB · Must show BLT sandwich</div>
             <div class="upload-preview" id="uploadPreview" style="display:none;">
               <img id="previewImg" src="" alt="Receipt preview">
               <div class="upload-filename" id="uploadFilename"></div>
@@ -106,7 +168,7 @@
         <div class="form-check">
           <input type="checkbox" id="consent" name="consent" required>
           <label class="form-check-label" for="consent">
-            I agree to the <a href="#terms">Terms &amp; Conditions</a> and <a href="#privacy">Privacy Policy</a>. I confirm this receipt is genuine and I am the purchaser.
+            I have read and agree to the <a href="#terms" onclick="openAccordion('terms-body')">Terms &amp; Conditions</a> and <a href="#privacy" onclick="openAccordion('privacy-body')">Privacy Policy</a>. I confirm this receipt is genuine, I purchased the qualifying product, and I am the rightful holder of this receipt.
           </label>
         </div>
 
@@ -120,7 +182,7 @@
       <div id="successState" class="success-state fade-in" style="display:none;" role="status">
         <div class="success-icon">🎉</div>
         <h2>You're in the draw!</h2>
-        <p>We're verifying your receipt now.<br>Good luck! 🇰🇷✈️</p>
+        <p>Your entry has been verified.<br>Good luck! 🇰🇷✈️</p>
         <p><strong id="successEntryId" style="font-size:.8rem;color:var(--color-text-muted);"></strong></p>
       </div>
     </div>
@@ -137,42 +199,151 @@
     <section class="card fade-in">
       <h2>How to Enter</h2>
       <div class="steps-list">
-        <div class="step-item"><div class="step-circle">🛍️</div><div><strong>Make a qualifying purchase</strong><br><small>Buy the participating product</small></div></div>
+        <div class="step-item"><div class="step-circle">🥪</div><div><strong>Buy a Subway BLT sandwich</strong><br><small>At any participating Subway outlet</small></div></div>
         <div class="step-item"><div class="step-circle">📱</div><div><strong>Fill in this form</strong><br><small>Enter your details and receipt info</small></div></div>
-        <div class="step-item"><div class="step-circle">🧾</div><div><strong>Upload your receipt</strong><br><small>Clear photo showing date and products</small></div></div>
-        <div class="step-item"><div class="step-circle">🎲</div><div><strong>Wait for the draw!</strong><br><small>Winners notified by email and phone</small></div></div>
+        <div class="step-item"><div class="step-circle">🧾</div><div><strong>Upload your receipt</strong><br><small>Clear photo showing BLT and OR number</small></div></div>
+        <div class="step-item"><div class="step-circle">🎲</div><div><strong>Wait for the draw!</strong><br><small>Winner notified by email and phone</small></div></div>
       </div>
     </section>
 
-    <section id="terms" class="card fade-in">
-      <h3>Terms &amp; Conditions</h3>
-      <p style="font-size:.875rem;color:var(--color-text-muted);margin-top:.5rem;">
-        Multiple entries are allowed — each entry must have a unique OR/Invoice number.
-        Receipts must show a valid purchase date within the promo period and include at least one participating product.
-        Duplicate OR numbers will be automatically disqualified. Fraudulent entries will be disqualified.
-        Winner will be selected via random raffle draw at the end of the promo period.
-        Winner will be contacted via the email and phone number provided.
-        Prize is non-transferable and non-exchangeable for cash.
-        Promoter reserves the right to verify winner eligibility before awarding the prize.
-      </p>
+    <!-- Terms & Conditions Accordion -->
+    <section class="card fade-in accordion-section" id="terms">
+      <button class="accordion-toggle" onclick="toggleAccordion('terms-body', this)" aria-expanded="false">
+        Terms &amp; Conditions
+        <span class="accordion-icon">▼</span>
+      </button>
+      <div class="accordion-body" id="terms-body">
+        <p><strong>SUBWAY® BLT PROMO – TRIP TO KOREA</strong><br>
+        Promotion Period: May 1, 2026 – August 31, 2026</p>
+
+        <h4>1. ELIGIBILITY</h4>
+        <p>This promotion is open to all residents of the Philippines who are at least 18 years of age at the time of entry. Employees of the Promoter, its affiliates, subsidiaries, advertising and promotion agencies, and their immediate family members are not eligible to participate.</p>
+
+        <h4>2. QUALIFYING PURCHASE</h4>
+        <p>To participate, a participant must purchase a Subway BLT sandwich from any participating Subway outlet during the promotion period. The official receipt must clearly show the BLT sandwich purchase, the date of purchase, and a valid 10-digit OR/Invoice number.</p>
+
+        <h4>3. HOW TO ENTER</h4>
+        <ol>
+          <li>Visit <strong>subwaypromo.ph</strong> during the promotion period.</li>
+          <li>Complete the online entry form with your full name, email address, mobile number, date of purchase, and OR/Invoice number.</li>
+          <li>Upload a clear photo of your official receipt showing the qualifying purchase.</li>
+          <li>Submit your entry and wait for verification.</li>
+        </ol>
+        <p>Multiple entries are allowed provided each entry uses a unique OR/Invoice number. One OR number = one entry.</p>
+
+        <h4>4. RECEIPT VERIFICATION</h4>
+        <p>All submitted receipts will be verified using automated OCR technology to confirm the presence of a qualifying BLT sandwich purchase. Entries with receipts that do not meet verification requirements will be disqualified. The Promoter reserves the right to manually verify any entry.</p>
+
+        <h4>5. DUPLICATE AND FRAUDULENT ENTRIES</h4>
+        <p>Duplicate OR/Invoice numbers will be automatically disqualified. The submission of fraudulent, altered, or illegible receipts is strictly prohibited and will result in immediate disqualification. The Promoter reserves the right to pursue legal action against fraudulent participants.</p>
+
+        <h4>6. PRIZE</h4>
+        <p>One (1) winner will receive a trip to Korea for two (2) persons, inclusive of round-trip airfare, hotel accommodations, tour, and ₩250,000 Korean Won pocket money. The prize is non-transferable, non-refundable, and cannot be exchanged for cash. Travel dates are subject to availability and Promoter approval.</p>
+
+        <h4>7. WINNER SELECTION</h4>
+        <p>The winner will be selected through a random electronic draw from all verified entries at the end of the promotion period. The draw will be conducted in the presence of a duly authorized representative. The Promoter's decision is final and binding.</p>
+
+        <h4>8. WINNER NOTIFICATION</h4>
+        <p>The winner will be notified via the email address and mobile number provided at time of entry within seven (7) days from the draw date. Failure to respond within five (5) days of notification will result in forfeiture of the prize and an alternate winner may be selected.</p>
+
+        <h4>9. GOVERNING LAW</h4>
+        <p>This promotion is governed by the laws of the Republic of the Philippines. Any disputes shall be resolved under Philippine jurisdiction.</p>
+
+        <h4>10. DTI PERMIT</h4>
+        <p>DTI Fair Trade Permit No. <strong>[PERMIT NUMBER – TO BE UPDATED]</strong>.</p>
+      </div>
     </section>
 
-    <section id="privacy" class="card fade-in">
-      <h3>Privacy Policy</h3>
-      <p style="font-size:.875rem;color:var(--color-text-muted);margin-top:.5rem;">
-        Your personal information is collected solely for the purpose of administering this promotion.
-        Data is stored securely and will not be shared with third parties except as required by law.
-        Receipt images are stored for verification purposes only and deleted after the campaign ends.
-        You may request deletion of your data by contacting the promoter.
-      </p>
+    <!-- Privacy Policy Accordion -->
+    <section class="card fade-in accordion-section" id="privacy">
+      <button class="accordion-toggle" onclick="toggleAccordion('privacy-body', this)" aria-expanded="false">
+        Privacy Policy
+        <span class="accordion-icon">▼</span>
+      </button>
+      <div class="accordion-body" id="privacy-body">
+        <p>This Privacy Policy is issued in compliance with Republic Act No. 10173, otherwise known as the <strong>Data Privacy Act of 2012</strong> of the Philippines, and its Implementing Rules and Regulations.</p>
+
+        <h4>1. DATA CONTROLLER</h4>
+        <p>The Promoter acts as the Personal Information Controller (PIC) for all personal data collected through this promotion.</p>
+
+        <h4>2. PERSONAL DATA COLLECTED</h4>
+        <ul>
+          <li>Full name</li>
+          <li>Email address</li>
+          <li>Mobile number</li>
+          <li>Date of purchase</li>
+          <li>OR/Invoice number</li>
+          <li>Receipt image</li>
+        </ul>
+
+        <h4>3. PURPOSE OF COLLECTION</h4>
+        <p>Your personal data is collected and processed solely for the following purposes:</p>
+        <ul>
+          <li>To validate your entry and verify your qualifying purchase</li>
+          <li>To administer the raffle draw and select a winner</li>
+          <li>To notify the winner and facilitate prize delivery</li>
+          <li>To comply with legal and regulatory requirements</li>
+        </ul>
+
+        <h4>4. LEGAL BASIS</h4>
+        <p>Processing of your personal data is based on your consent, which is given upon submission of your entry, and is necessary for the performance of our obligations under this promotion.</p>
+
+        <h4>5. DATA SHARING</h4>
+        <p>Your personal data will not be sold, rented, or shared with third parties for marketing purposes. Data may be shared only with:</p>
+        <ul>
+          <li>Service providers engaged to administer this promotion (under strict confidentiality obligations)</li>
+          <li>Government authorities as required by law</li>
+        </ul>
+
+        <h4>6. DATA RETENTION</h4>
+        <p>Personal data collected through this promotion will be retained for a period not exceeding one (1) year after the promotion ends, after which it will be securely deleted or anonymized. Receipt images will be deleted immediately after verification.</p>
+
+        <h4>7. YOUR RIGHTS</h4>
+        <p>As a data subject under the Data Privacy Act of 2012, you have the right to:</p>
+        <ul>
+          <li>Be informed of the processing of your personal data</li>
+          <li>Access your personal data</li>
+          <li>Object to the processing of your personal data</li>
+          <li>Erasure or blocking of your personal data</li>
+          <li>Lodge a complaint with the National Privacy Commission (NPC)</li>
+        </ul>
+
+        <h4>8. DATA SECURITY</h4>
+        <p>We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction.</p>
+
+        <h4>9. CONTACT</h4>
+        <p>For any privacy-related concerns or to exercise your rights, please contact us at: <strong>[CONTACT EMAIL – TO BE UPDATED]</strong></p>
+        <p>You may also file a complaint with the National Privacy Commission at <a href="https://www.privacy.gov.ph" target="_blank">www.privacy.gov.ph</a>.</p>
+      </div>
     </section>
+
   </main>
 
   <footer>
-    <div class="footer-brand" id="footerBrand">Raffle Promotion</div>
-    <p>© <span id="footerYear"></span> All rights reserved. &nbsp;|&nbsp; <a href="admin.html">Admin</a></p>
+    <div class="subway-brand" style="margin-bottom:.5rem;">
+      <div style="font-size:1.25rem;font-weight:900;color:var(--subway-yellow,#FFC600);">SUBWAY<span style="color:#fff;">®</span></div>
+      <div>🇰🇷</div>
+    </div>
+    <div class="footer-brand">SUBWAY PROMO TRIP TO KOREA</div>
+    <p style="font-size:.8rem;color:rgba(255,255,255,.5);margin-top:.25rem;">© <span id="footerYear"></span> All rights reserved. &nbsp;|&nbsp; <a href="admin.html" style="color:rgba(255,255,255,.3);">Admin</a></p>
   </footer>
 
   <script src="app.js"></script>
+  <script>
+    function toggleAccordion(bodyId, btn) {
+      const body = document.getElementById(bodyId);
+      const isOpen = body.classList.contains('open');
+      body.classList.toggle('open', !isOpen);
+      btn.classList.toggle('open', !isOpen);
+      btn.setAttribute('aria-expanded', !isOpen);
+    }
+    function openAccordion(bodyId) {
+      const body = document.getElementById(bodyId);
+      const btn = body.previousElementSibling;
+      body.classList.add('open');
+      btn.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  </script>
 </body>
 </html>
