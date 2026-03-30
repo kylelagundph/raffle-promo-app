@@ -86,6 +86,17 @@
     .accordion-body h4 { font-size: .875rem; font-weight: 700; color: #374151; margin: 1rem 0 .35rem; }
     .accordion-body ol, .accordion-body ul { padding-left: 1.25rem; margin: .5rem 0; }
     .accordion-body li { margin-bottom: .35rem; }
+    /* How to Enter — consistent green icon circles */
+    .step-icon-green {
+      background: #009B48 !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
@@ -224,28 +235,75 @@
     <section class="card fade-in">
       <h2>How to Enter</h2>
       <div class="steps-list">
+        <!-- Step 1: Subway Sandwich -->
         <div class="step-item">
-          <div class="step-circle" style="background:#009B48;padding:6px;">
-            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
-              <!-- Bread top -->
-              <ellipse cx="32" cy="14" rx="28" ry="10" fill="#F5C842"/>
-              <ellipse cx="32" cy="16" rx="28" ry="7" fill="#E8A820"/>
-              <!-- Lettuce -->
-              <ellipse cx="32" cy="24" rx="29" ry="5" fill="#4CAF50"/>
-              <!-- Chicken filling -->
-              <ellipse cx="32" cy="30" rx="27" ry="5" fill="#F4A261"/>
-              <!-- Sauce -->
-              <ellipse cx="32" cy="35" rx="26" ry="3" fill="#E76F51" opacity=".8"/>
-              <!-- Bread bottom -->
-              <ellipse cx="32" cy="40" rx="28" ry="8" fill="#E8A820"/>
-              <ellipse cx="32" cy="44" rx="28" ry="6" fill="#D4901A"/>
+          <div class="step-circle step-icon-green">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+              <!-- Top bun: rounded arc shape -->
+              <path d="M4 22 Q4 8 24 8 Q44 8 44 22 Z" fill="#F5C842"/>
+              <path d="M4 22 Q4 16 24 16 Q44 16 44 22 Z" fill="#D4901A"/>
+              <!-- Sesame seeds -->
+              <ellipse cx="16" cy="13" rx="2" ry="1.2" fill="#D4901A" opacity=".7" transform="rotate(-15,16,13)"/>
+              <ellipse cx="24" cy="10" rx="2" ry="1.2" fill="#D4901A" opacity=".7"/>
+              <ellipse cx="32" cy="13" rx="2" ry="1.2" fill="#D4901A" opacity=".7" transform="rotate(15,32,13)"/>
+              <!-- Lettuce (wavy) -->
+              <path d="M3 24 Q8 21 13 24 Q18 27 23 24 Q28 21 33 24 Q38 27 45 24 L45 27 Q38 30 33 27 Q28 24 23 27 Q18 30 13 27 Q8 24 3 27 Z" fill="#4CAF50"/>
+              <!-- Chicken (tan/golden) -->
+              <rect x="4" y="27" width="40" height="6" rx="2" fill="#F4A261"/>
+              <!-- Sauce stripe -->
+              <rect x="4" y="30" width="40" height="2" rx="1" fill="#E76F51" opacity=".7"/>
+              <!-- Bottom bun -->
+              <path d="M4 33 L44 33 L44 40 Q44 44 24 44 Q4 44 4 40 Z" fill="#F5C842"/>
+              <rect x="4" y="33" width="40" height="4" rx="0" fill="#E8A820"/>
             </svg>
           </div>
           <div><strong>Buy a Subway Chicken Bulgogi</strong><br><small>At any participating Subway outlet</small></div>
         </div>
-        <div class="step-item"><div class="step-circle">📱</div><div><strong>Fill in this form</strong><br><small>Enter your details and receipt info</small></div></div>
-        <div class="step-item"><div class="step-circle">🧾</div><div><strong>Upload your receipt</strong><br><small>Clear photo showing Chicken Bulgogi and OR number</small></div></div>
-        <div class="step-item"><div class="step-circle">🎲</div><div><strong>Wait for the draw!</strong><br><small>Winner notified by email and phone</small></div></div>
+        <!-- Step 2: Form / Mobile -->
+        <div class="step-item">
+          <div class="step-circle step-icon-green">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+              <rect x="12" y="4" width="24" height="40" rx="4" fill="#fff" opacity=".9"/>
+              <rect x="14" y="8" width="20" height="26" rx="2" fill="#e0f0ff"/>
+              <rect x="18" y="12" width="12" height="2" rx="1" fill="#009B48"/>
+              <rect x="18" y="16" width="12" height="2" rx="1" fill="#009B48" opacity=".6"/>
+              <rect x="18" y="20" width="8" height="2" rx="1" fill="#009B48" opacity=".4"/>
+              <circle cx="24" cy="39" r="2" fill="#009B48" opacity=".5"/>
+            </svg>
+          </div>
+          <div><strong>Fill in this form</strong><br><small>Enter your details and receipt info</small></div>
+        </div>
+        <!-- Step 3: Receipt -->
+        <div class="step-item">
+          <div class="step-circle step-icon-green">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+              <path d="M10 4 L38 4 L38 44 L34 40 L30 44 L26 40 L22 44 L18 40 L14 44 L10 40 Z" fill="#fff" opacity=".95"/>
+              <rect x="14" y="10" width="20" height="2" rx="1" fill="#009B48"/>
+              <rect x="14" y="15" width="16" height="2" rx="1" fill="#009B48" opacity=".6"/>
+              <rect x="14" y="20" width="18" height="2" rx="1" fill="#009B48" opacity=".6"/>
+              <rect x="14" y="25" width="12" height="2" rx="1" fill="#009B48" opacity=".4"/>
+              <rect x="22" y="30" width="10" height="3" rx="1" fill="#FFC600"/>
+            </svg>
+          </div>
+          <div><strong>Upload your receipt</strong><br><small>Clear photo showing Chicken Bulgogi and OR number</small></div>
+        </div>
+        <!-- Step 4: Draw -->
+        <div class="step-item">
+          <div class="step-circle step-icon-green">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+              <!-- Trophy cup -->
+              <path d="M16 8 L32 8 L32 26 Q32 34 24 36 Q16 34 16 26 Z" fill="#FFC600"/>
+              <rect x="20" y="36" width="8" height="4" rx="1" fill="#FFC600"/>
+              <rect x="16" y="40" width="16" height="3" rx="2" fill="#FFC600"/>
+              <!-- Handles -->
+              <path d="M16 12 Q8 12 8 20 Q8 26 16 26" fill="none" stroke="#FFC600" stroke-width="3" stroke-linecap="round"/>
+              <path d="M32 12 Q40 12 40 20 Q40 26 32 26" fill="none" stroke="#FFC600" stroke-width="3" stroke-linecap="round"/>
+              <!-- Star -->
+              <text x="24" y="26" font-size="12" fill="#009B48" text-anchor="middle" font-weight="bold">★</text>
+            </svg>
+          </div>
+          <div><strong>Wait for the draw!</strong><br><small>Winner notified by email and phone</small></div>
+        </div>
       </div>
     </section>
 
