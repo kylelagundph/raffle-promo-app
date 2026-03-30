@@ -145,7 +145,7 @@ async def submit_entry(
     # 7. Trigger async OCR verification
     asyncio.create_task(_verify_async(entry["id"], receipt_bytes, purchase_date))
 
-    return JSONResponse(202, {
+    return JSONResponse(status_code=202, content={
         "success":  True,
         "message":  "Your entry has been received and is being verified. Good luck!",
         "entry_id": entry["id"],
