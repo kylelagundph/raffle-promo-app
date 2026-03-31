@@ -106,7 +106,10 @@ async def delete_entry(
 ):
     """Permanently delete any entry regardless of verification status."""
     _auth(x_admin_password)
-    deleted = db.delete_entry(entry_id)
+    try:
+        deleted = db.delete_entry(entry_id)
+    except Exception as e:
+        raise HTTPException(500, f"Delete failed: {str(e)}")
     if not deleted:
         raise HTTPException(404, "Entry not found.")
     return {"success": True, "deleted_id": entry_id}

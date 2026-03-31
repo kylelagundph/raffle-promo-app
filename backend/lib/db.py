@@ -31,7 +31,6 @@ def get_settings() -> Dict[str, str]:
         resp = client.table("settings").select("key,value").execute()
         return {row["key"]: row["value"] for row in (resp.data or [])}
     except Exception:
-        # Fallback to environment variables
         return {
             "campaign_start_date":       os.environ.get("CAMPAIGN_START_DATE", "2026-05-01"),
             "campaign_end_date":         os.environ.get("CAMPAIGN_END_DATE", "2026-08-31"),
@@ -94,12 +93,26 @@ def update_entry_verification(
 
 
 def delete_entry(entry_id: str) -> bool:
-    """Hard-delete an entry by ID. Returns True if deleted, False if not found."""
+    """
+    Permanently delete an entry by ID regardless of verification status.
+    Nullifies any raffle_draws references first to avoid FK constraint errors.
+    Returns True if deleted, False if not found.
+    """
     client = get_client()
-    # Check it exists first
+
+    # Check entry exists
     check = client.table("entries").select("id").eq("id", entry_id).limit(1).execute()
     if not check.data:
         return False
+
+    # Nullify winner_entry_id in raffle_draws if this entry was ever a draw winner
+    # (handles both RESTRICT and SET NULL FK constraints)
+    try:
+        client.table("raffle_draws").update({"winner_entry_id": None}).eq("winner_entry_id", entry_id).execute()
+    except Exception:
+        pass  # If already SET NULL on FK, this is a no-op
+
+    # Now delete the entry
     client.table("entries").delete().eq("id", entry_id).execute()
     return True
 
@@ -132,7 +145,7 @@ def count_entries(status: Optional[str] = None) -> int:
 
 
 def get_verified_entries_for_draw() -> List[Dict[str, Any]]:
-    """Return all verified entries eligible for raffle draw (excludes deleted entries)."""
+    """Return all verified entries eligible for raffle draw."""
     client = get_client()
     resp = client.table("entries").select(
         "id,name,email,phone,invoice_number,created_at"
