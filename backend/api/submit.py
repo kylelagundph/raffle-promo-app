@@ -146,15 +146,9 @@ async def submit_entry(
     is_valid, rejection_reason = await _verify_and_update(entry["id"], receipt_bytes, purchase_date)
 
     if not is_valid:
-        # Return rejection message directly to user
-        user_message = "Entry is invalid — Promo Product not found."
-        if rejection_reason and "date" in rejection_reason.lower():
-            user_message = f"Entry is invalid — {rejection_reason}"
-        elif rejection_reason and "read" in rejection_reason.lower():
-            user_message = "Entry is invalid — Receipt image could not be read clearly. Please upload a clearer photo."
         return JSONResponse(status_code=422, content={
             "success": False,
-            "message": user_message,
+            "message": "Promo Item Not Found. Please try again.",
             "entry_id": entry["id"],
         })
 
