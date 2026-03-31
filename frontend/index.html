@@ -3,123 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Subway Promo — Win a Trip to Korea! 🇰🇷</title>
+  <meta name="description" content="Buy a Subway meal, upload your receipt, and win a trip to Korea!">
+  <title>Subway Promo Trip to Korea</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script defer src="/_vercel/insights/script.js"></script>
-  <style>
-    /* Subway brand colors */
-    :root {
-      --subway-green: #00843D;
-      --subway-yellow: #FFC600;
-    }
-    .subway-brand {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: .5rem;
-    }
-    .subway-logo-svg {
-      height: 48px;
-      width: auto;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,.3));
-    }
-    .hero-x-divider {
-      font-size: 1.8rem;
-      color: rgba(255,255,255,.6);
-      font-weight: 300;
-    }
-    .korea-flag-hero { font-size: 2.8rem; }
-    .subway-tagline {
-      font-size: .9rem;
-      color: rgba(255,255,255,.85);
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      font-weight: 600;
-      margin-bottom: .75rem;
-    }
-    .hero-prize-details {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: .5rem .75rem;
-      margin: .75rem 0;
-      font-size: .9rem;
-    }
-    .hero-prize-details span {
-      background: rgba(255,255,255,.15);
-      border-radius: 999px;
-      padding: .3rem .8rem;
-      backdrop-filter: blur(4px);
-    }
-    /* Accordion for T&C and Privacy */
-    .accordion-section { margin-bottom: 1rem; }
-    .accordion-toggle {
-      width: 100%;
-      background: none;
-      border: none;
-      text-align: left;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 0;
-      border-bottom: 1px solid #e5e7eb;
-      font-size: 1rem;
-      font-weight: 600;
-      color: #111827;
-    }
-    .accordion-toggle:hover { color: var(--subway-green, #00843D); }
-    .accordion-icon { font-size: 1.2rem; transition: transform .25s; }
-    .accordion-toggle.open .accordion-icon { transform: rotate(180deg); }
-    .accordion-body {
-      display: none;
-      padding: 1rem 0 .5rem;
-      font-size: .875rem;
-      color: #6b7280;
-      line-height: 1.7;
-    }
-    .accordion-body.open { display: block; }
-    .accordion-body h4 { font-size: .875rem; font-weight: 700; color: #374151; margin: 1rem 0 .35rem; }
-    .accordion-body ol, .accordion-body ul { padding-left: 1.25rem; margin: .5rem 0; }
-    .accordion-body li { margin-bottom: .35rem; }
-    /* How to Enter — consistent green icon circles */
-    .step-icon-green {
-      background: #009B48 !important;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-  </style>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥪</text></svg>">
 </head>
 <body>
 
+  <!-- ── Hero ──────────────────────────────────────────────── -->
   <header class="hero">
     <div class="hero-bg-overlay"></div>
     <div class="hero-content container">
-      <div class="subway-brand">
-        <img src="subway-logo.svg" alt="Subway" class="subway-logo-svg" style="height:52px;width:auto;">
-        <span class="hero-x-divider">×</span>
-        <span class="korea-flag-hero">🇰🇷</span>
+      <div class="hero-logos">
+        <div class="subway-logo">SUBWAY<span>®</span></div>
       </div>
-      <p class="subway-tagline">The Chicken Bulgogi Promo</p>
-      <h1>Win a Trip to <span class="korea-text">Korea!</span><br><span style="font-size:.65em;opacity:.9;">for 2!</span></h1>
-      <div class="hero-prize-details">
-        <span>✈️ Flights</span>
-        <span>🏨 Hotel</span>
-        <span>🗺️ Tour</span>
-        <span>💰 ₩250,000 pocket money</span>
-      </div>
-      <p id="heroSubtitle">Buy a Chicken Bulgogi, upload your receipt, and join the draw!</p>
+      <h1>Win a Trip<br>to <span class="korea-text">Korea!</span></h1>
+      <p>Buy any Subway meal, upload your receipt,<br>and you could be flying to Seoul ✈️</p>
       <div class="hero-meta">
-        <span id="heroDates">🗓️ Loading...</span>
+        <span>🗓️ Campaign ends 31 Dec 2026</span>
+        <span>🎁 Return flights + 5 nights hotel</span>
       </div>
     </div>
     <div class="hero-wave">
@@ -127,320 +32,168 @@
     </div>
   </header>
 
+  <!-- ── Main Form ──────────────────────────────────────────── -->
   <main class="container">
     <div class="card fade-in" id="formCard">
+
       <div class="card-header">
+        <div class="card-icon">🎟️</div>
         <h2>Enter the Draw</h2>
-        <p id="formSubheading">Fill in your details and upload your Subway receipt</p>
+        <p>Fill in your details and upload your Subway receipt</p>
       </div>
 
+      <!-- Steps -->
       <div class="steps" aria-label="Form steps">
-        <div class="step active" id="step1"><span class="step-num">1</span><span>Your Details</span></div>
+        <div class="step active" id="step1">
+          <span class="step-num">1</span>
+          <span>Your Details</span>
+        </div>
         <div class="step-divider"></div>
-        <div class="step" id="step2"><span class="step-num">2</span><span>Receipt</span></div>
+        <div class="step" id="step2">
+          <span class="step-num">2</span>
+          <span>Receipt</span>
+        </div>
         <div class="step-divider"></div>
-        <div class="step" id="step3"><span class="step-num">3</span><span>Done!</span></div>
+        <div class="step" id="step3">
+          <span class="step-num">3</span>
+          <span>Done!</span>
+        </div>
       </div>
 
+      <!-- Alert -->
       <div id="globalAlert" class="alert" role="alert" style="display:none;"></div>
 
+      <!-- Form -->
       <form id="entryForm" novalidate autocomplete="on">
 
         <div class="form-group">
           <label class="form-label" for="name">Full Name <span class="required">*</span></label>
-          <input type="text" id="name" name="name" class="form-control" placeholder="Juan dela Cruz" autocomplete="name" required minlength="2" maxlength="100">
+          <input type="text" id="name" name="name" class="form-control" placeholder="Jane Smith" autocomplete="name" required minlength="2" maxlength="100">
           <div class="invalid-feedback">Please enter your full name.</div>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="email">Email Address <span class="required">*</span></label>
-          <input type="email" id="email" name="email" class="form-control" placeholder="juan@example.com" autocomplete="email" required>
+          <input type="email" id="email" name="email" class="form-control" placeholder="jane@example.com" autocomplete="email" required>
           <div class="invalid-feedback">Please enter a valid email address.</div>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="phone">Phone Number <span class="required">*</span></label>
-          <div class="phone-input-wrap">
-            <span class="phone-prefix">+63</span>
-            <input type="tel" id="phone" name="phone" class="form-control phone-field" placeholder="9171234567" autocomplete="tel" required maxlength="12">
-          </div>
-
-          <div class="invalid-feedback" id="phoneFeedback">Please enter a valid phone number.</div>
+          <input type="tel" id="phone" name="phone" class="form-control" placeholder="+65 9123 4567" autocomplete="tel" required>
+          <div class="form-hint">Include country code, e.g. +65</div>
+          <div class="invalid-feedback">Please enter a valid phone number.</div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="purchase_date">Date of Purchase <span class="required">*</span></label>
-          <input type="date" id="purchase_date" name="purchase_date" class="form-control" required>
-          <div class="form-hint">Must be within the promo period</div>
-          <div class="invalid-feedback" id="dateFeedback">Please select your purchase date.</div>
+          <label class="form-label" for="receiptNumber">10-digit number from your receipt <span class="required">*</span></label>
+          <input type="text" id="receiptNumber" name="receiptNumber" class="form-control" placeholder="0000142779" inputmode="numeric" pattern="[0-9]{10}" required maxlength="10">
+          <div class="form-hint">Enter the 10-digit invoice number — see <a href="sample-receipt.jpg" target="_blank">sample</a></div>
+          <div class="invalid-feedback">Please enter the 10-digit invoice number from your receipt.</div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="invoice_number">OR / Invoice Number <span class="required">*</span></label>
-          <input type="text" id="invoice_number" name="invoice_number" class="form-control" placeholder="0000142779" required maxlength="10" minlength="10" pattern="\d{10}" inputmode="numeric">
-          <div class="form-hint">10-digit number from your receipt (e.g. 0000142779)</div>
-          <div class="invalid-feedback" id="invoiceFeedback">Please enter the 10-digit OR/Invoice number.</div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="receipt">Receipt Photo <span class="required">*</span></label>
+          <label class="form-label" for="receipt">Subway Receipt Photo <span class="required">*</span></label>
           <div class="upload-area" id="uploadArea" role="button" tabindex="0" aria-label="Upload receipt">
             <input type="file" id="receipt" name="receipt" accept=".jpg,.jpeg,.png,.heic,.heif,image/jpeg,image/png,image/heic,image/heif" required>
             <span class="upload-icon">🧾</span>
-            <div class="upload-title">Tap to upload your Subway receipt</div>
-            <div class="upload-sub">JPG, PNG, HEIC · Max 10 MB · Must show Chicken Bulgogi</div>
-            <div class="upload-preview" id="uploadPreview" style="display:none;">
+            <div class="upload-title">Tap to upload your receipt</div>
+            <div class="upload-sub" id="uploadHint">JPG, PNG, HEIC · Max 10 MB</div>
+            <div class="upload-preview" id="uploadPreview">
               <img id="previewImg" src="" alt="Receipt preview">
               <div class="upload-filename" id="uploadFilename"></div>
             </div>
           </div>
-          <div class="invalid-feedback" id="receiptFeedback" style="display:none;">Please upload your receipt.</div>
+          <div class="invalid-feedback" id="receiptFeedback" style="display:none;">Please upload your Subway receipt.</div>
         </div>
 
         <div class="form-check">
           <input type="checkbox" id="consent" name="consent" required>
           <label class="form-check-label" for="consent">
-            I have read and agree to the <a href="#terms" onclick="openAccordion('terms-body')">Terms &amp; Conditions</a> and <a href="#privacy" onclick="openAccordion('privacy-body')">Privacy Policy</a>. I confirm this receipt is genuine, I purchased the qualifying product, and I am the rightful holder of this receipt.
+            I agree to the <a href="#terms">Terms &amp; Conditions</a> and <a href="#privacy">Privacy Policy</a>. I confirm this receipt is genuine and I am the purchaser.
           </label>
         </div>
 
         <button type="submit" class="btn btn-primary" id="submitBtn">
           <span class="spinner" aria-hidden="true"></span>
-          <span class="btn-text">Enter Now 🇰🇷</span>
+          <span class="btn-text">Enter Now 🎟️</span>
         </button>
 
       </form>
 
+      <!-- Success -->
       <div id="successState" class="success-state fade-in" style="display:none;" role="status">
         <div class="success-icon">🎉</div>
         <h2>You're in the draw!</h2>
-        <p>Your entry has been verified.<br>Good luck! 🇰🇷✈️</p>
+        <p>We're verifying your receipt now.<br>Good luck — annyeonghaseyo from Seoul! 👋</p>
         <p><strong id="successEntryId" style="font-size:.8rem;color:var(--color-text-muted);"></strong></p>
       </div>
+
     </div>
 
+    <!-- Prize Details -->
     <section class="prize-card fade-in">
       <div class="prize-header">🏆 The Prize</div>
-      <div id="prizeDetails" class="prize-items">
-        <div class="prize-item">🎁 <span id="prizeDesc">Loading...</span></div>
-        <div class="prize-item">📅 <span id="promoPeriod">Loading...</span></div>
-        <div class="prize-item">🎲 <span>Draw date: <strong id="drawDateDisplay">Loading...</strong></span></div>
+      <div class="prize-items">
+        <div class="prize-item">✈️ <span>Return flights to Seoul</span></div>
+        <div class="prize-item">🏨 <span>5 nights hotel in Gangnam</span></div>
+        <div class="prize-item">🍜 <span>₩500,000 spending money</span></div>
+        <div class="prize-item">📸 <span>K-culture experience package</span></div>
       </div>
     </section>
 
-    <section class="card fade-in">
-      <h2>How to Enter</h2>
+    <!-- How It Works -->
+    <section class="card fade-in" aria-labelledby="howTitle">
+      <h2 id="howTitle">How to Enter</h2>
       <div class="steps-list">
-        <!-- Step 1: Subway Sandwich -->
         <div class="step-item">
-          <div class="step-circle step-icon-green">
-            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-              <!-- Top bun: rounded arc shape -->
-              <path d="M4 22 Q4 8 24 8 Q44 8 44 22 Z" fill="#F5C842"/>
-              <path d="M4 22 Q4 16 24 16 Q44 16 44 22 Z" fill="#D4901A"/>
-              <!-- Sesame seeds -->
-              <ellipse cx="16" cy="13" rx="2" ry="1.2" fill="#D4901A" opacity=".7" transform="rotate(-15,16,13)"/>
-              <ellipse cx="24" cy="10" rx="2" ry="1.2" fill="#D4901A" opacity=".7"/>
-              <ellipse cx="32" cy="13" rx="2" ry="1.2" fill="#D4901A" opacity=".7" transform="rotate(15,32,13)"/>
-              <!-- Lettuce (wavy) -->
-              <path d="M3 24 Q8 21 13 24 Q18 27 23 24 Q28 21 33 24 Q38 27 45 24 L45 27 Q38 30 33 27 Q28 24 23 27 Q18 30 13 27 Q8 24 3 27 Z" fill="#4CAF50"/>
-              <!-- Chicken (tan/golden) -->
-              <rect x="4" y="27" width="40" height="6" rx="2" fill="#F4A261"/>
-              <!-- Sauce stripe -->
-              <rect x="4" y="30" width="40" height="2" rx="1" fill="#E76F51" opacity=".7"/>
-              <!-- Bottom bun -->
-              <path d="M4 33 L44 33 L44 40 Q44 44 24 44 Q4 44 4 40 Z" fill="#F5C842"/>
-              <rect x="4" y="33" width="40" height="4" rx="0" fill="#E8A820"/>
-            </svg>
-          </div>
-          <div><strong>Buy a Subway Chicken Bulgogi</strong><br><small>At any participating Subway outlet</small></div>
+          <div class="step-circle">🥪</div>
+          <div><strong>Buy any Subway meal</strong><br><small>At any participating outlet</small></div>
         </div>
-        <!-- Step 2: Form / Mobile -->
         <div class="step-item">
-          <div class="step-circle step-icon-green">
-            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-              <rect x="12" y="4" width="24" height="40" rx="4" fill="#fff" opacity=".9"/>
-              <rect x="14" y="8" width="20" height="26" rx="2" fill="#e0f0ff"/>
-              <rect x="18" y="12" width="12" height="2" rx="1" fill="#009B48"/>
-              <rect x="18" y="16" width="12" height="2" rx="1" fill="#009B48" opacity=".6"/>
-              <rect x="18" y="20" width="8" height="2" rx="1" fill="#009B48" opacity=".4"/>
-              <circle cx="24" cy="39" r="2" fill="#009B48" opacity=".5"/>
-            </svg>
-          </div>
-          <div><strong>Fill in this form</strong><br><small>Enter your details and receipt info</small></div>
+          <div class="step-circle">📱</div>
+          <div><strong>Scan the QR code</strong><br><small>Or visit this page directly</small></div>
         </div>
-        <!-- Step 3: Receipt -->
         <div class="step-item">
-          <div class="step-circle step-icon-green">
-            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-              <path d="M10 4 L38 4 L38 44 L34 40 L30 44 L26 40 L22 44 L18 40 L14 44 L10 40 Z" fill="#fff" opacity=".95"/>
-              <rect x="14" y="10" width="20" height="2" rx="1" fill="#009B48"/>
-              <rect x="14" y="15" width="16" height="2" rx="1" fill="#009B48" opacity=".6"/>
-              <rect x="14" y="20" width="18" height="2" rx="1" fill="#009B48" opacity=".6"/>
-              <rect x="14" y="25" width="12" height="2" rx="1" fill="#009B48" opacity=".4"/>
-              <rect x="22" y="30" width="10" height="3" rx="1" fill="#FFC600"/>
-            </svg>
-          </div>
-          <div><strong>Upload your receipt</strong><br><small>Clear photo showing Chicken Bulgogi and OR number</small></div>
+          <div class="step-circle">🧾</div>
+          <div><strong>Upload your receipt</strong><br><small>Clear photo, all items visible</small></div>
         </div>
-        <!-- Step 4: Draw -->
         <div class="step-item">
-          <div class="step-circle step-icon-green">
-            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-              <!-- Trophy cup -->
-              <path d="M16 8 L32 8 L32 26 Q32 34 24 36 Q16 34 16 26 Z" fill="#FFC600"/>
-              <rect x="20" y="36" width="8" height="4" rx="1" fill="#FFC600"/>
-              <rect x="16" y="40" width="16" height="3" rx="2" fill="#FFC600"/>
-              <!-- Handles -->
-              <path d="M16 12 Q8 12 8 20 Q8 26 16 26" fill="none" stroke="#FFC600" stroke-width="3" stroke-linecap="round"/>
-              <path d="M32 12 Q40 12 40 20 Q40 26 32 26" fill="none" stroke="#FFC600" stroke-width="3" stroke-linecap="round"/>
-              <!-- Star -->
-              <text x="24" y="26" font-size="12" fill="#009B48" text-anchor="middle" font-weight="bold">★</text>
-            </svg>
-          </div>
-          <div><strong>Wait for the draw!</strong><br><small>Winner notified by email and phone</small></div>
+          <div class="step-circle">🎲</div>
+          <div><strong>Winner drawn 1 Jan 2027</strong><br><small>From all verified entries</small></div>
         </div>
       </div>
     </section>
 
-    <!-- Terms & Conditions Accordion -->
-    <section class="card fade-in accordion-section" id="terms">
-      <button class="accordion-toggle" onclick="toggleAccordion('terms-body', this)" aria-expanded="false">
-        Terms &amp; Conditions
-        <span class="accordion-icon">▼</span>
-      </button>
-      <div class="accordion-body" id="terms-body">
-        <p><strong>SUBWAY® CHICKEN BULGOGI PROMO – TRIP TO KOREA</strong><br>
-        Promotion Period: May 1, 2026 – August 31, 2026</p>
-
-        <h4>1. ELIGIBILITY</h4>
-        <p>This promotion is open to all residents of the Philippines who are at least 18 years of age at the time of entry. Employees of the Promoter, its affiliates, subsidiaries, advertising and promotion agencies, and their immediate family members are not eligible to participate.</p>
-
-        <h4>2. QUALIFYING PURCHASE</h4>
-        <p>To participate, a participant must purchase a Subway Chicken Bulgogi from any participating Subway outlet during the promotion period. The official receipt must clearly show the Chicken Bulgogi purchase, the date of purchase, and a valid 10-digit OR/Invoice number.</p>
-
-        <h4>3. HOW TO ENTER</h4>
-        <ol>
-          <li>Visit <strong>www.subwayph.promo</strong> during the promotion period.</li>
-          <li>Complete the online entry form with your full name, email address, mobile number, date of purchase, and OR/Invoice number.</li>
-          <li>Upload a clear photo of your official receipt showing the qualifying purchase.</li>
-          <li>Submit your entry and wait for verification.</li>
-        </ol>
-        <p>Multiple entries are allowed provided each entry uses a unique OR/Invoice number. One OR number = one entry.</p>
-
-        <h4>4. RECEIPT VERIFICATION</h4>
-        <p>All submitted receipts will be verified using automated OCR technology to confirm the presence of a qualifying Chicken Bulgogi purchase. Entries with receipts that do not meet verification requirements will be disqualified. The Promoter reserves the right to manually verify any entry.</p>
-
-        <h4>5. DUPLICATE AND FRAUDULENT ENTRIES</h4>
-        <p>Duplicate OR/Invoice numbers will be automatically disqualified. The submission of fraudulent, altered, or illegible receipts is strictly prohibited and will result in immediate disqualification. The Promoter reserves the right to pursue legal action against fraudulent participants.</p>
-
-        <h4>6. PRIZE</h4>
-        <p>One (1) winner will receive a trip to Korea for two (2) persons, inclusive of round-trip airfare, hotel accommodations, tour, and ₩250,000 Korean Won pocket money. The prize is non-transferable, non-refundable, and cannot be exchanged for cash. Travel dates are subject to availability and Promoter approval.</p>
-
-        <h4>7. WINNER SELECTION</h4>
-        <p>The winner will be selected through a random electronic draw from all verified entries at the end of the promotion period. The draw will be conducted in the presence of a duly authorized representative. The Promoter's decision is final and binding.</p>
-
-        <h4>8. WINNER NOTIFICATION</h4>
-        <p>The winner will be notified via the email address and mobile number provided at time of entry within seven (7) days from the draw date. Failure to respond within five (5) days of notification will result in forfeiture of the prize and an alternate winner may be selected.</p>
-
-        <h4>9. GOVERNING LAW</h4>
-        <p>This promotion is governed by the laws of the Republic of the Philippines. Any disputes shall be resolved under Philippine jurisdiction.</p>
-
-        <h4>10. DTI PERMIT</h4>
-        <p>DTI Fair Trade Permit No. <strong>[PERMIT NUMBER – TO BE UPDATED]</strong>.</p>
-      </div>
+    <!-- Terms -->
+    <section id="terms" class="card fade-in">
+      <h3>Terms &amp; Conditions</h3>
+      <p style="font-size:.875rem;color:var(--color-text-muted);margin-top:.5rem;">
+        One entry per person. Receipt must show purchase of a Subway meal within the campaign period (now – 31 Dec 2026).
+        Receipts are verified using automated OCR. Fraudulent or duplicate entries will be disqualified.
+        Winner will be contacted via email and phone within 7 days of the draw.
+        Prize is non-transferable and non-exchangeable for cash.
+        Travel dates subject to availability. Promoter reserves the right to verify eligibility before awarding the prize.
+      </p>
     </section>
 
-    <!-- Privacy Policy Accordion -->
-    <section class="card fade-in accordion-section" id="privacy">
-      <button class="accordion-toggle" onclick="toggleAccordion('privacy-body', this)" aria-expanded="false">
-        Privacy Policy
-        <span class="accordion-icon">▼</span>
-      </button>
-      <div class="accordion-body" id="privacy-body">
-        <p>This Privacy Policy is issued in compliance with Republic Act No. 10173, otherwise known as the <strong>Data Privacy Act of 2012</strong> of the Philippines, and its Implementing Rules and Regulations.</p>
-
-        <h4>1. DATA CONTROLLER</h4>
-        <p>The Promoter acts as the Personal Information Controller (PIC) for all personal data collected through this promotion.</p>
-
-        <h4>2. PERSONAL DATA COLLECTED</h4>
-        <ul>
-          <li>Full name</li>
-          <li>Email address</li>
-          <li>Mobile number</li>
-          <li>Date of purchase</li>
-          <li>OR/Invoice number</li>
-          <li>Receipt image</li>
-        </ul>
-
-        <h4>3. PURPOSE OF COLLECTION</h4>
-        <p>Your personal data is collected and processed solely for the following purposes:</p>
-        <ul>
-          <li>To validate your entry and verify your qualifying purchase</li>
-          <li>To administer the raffle draw and select a winner</li>
-          <li>To notify the winner and facilitate prize delivery</li>
-          <li>To comply with legal and regulatory requirements</li>
-        </ul>
-
-        <h4>4. LEGAL BASIS</h4>
-        <p>Processing of your personal data is based on your consent, which is given upon submission of your entry, and is necessary for the performance of our obligations under this promotion.</p>
-
-        <h4>5. DATA SHARING</h4>
-        <p>Your personal data will not be sold, rented, or shared with third parties for marketing purposes. Data may be shared only with:</p>
-        <ul>
-          <li>Service providers engaged to administer this promotion (under strict confidentiality obligations)</li>
-          <li>Government authorities as required by law</li>
-        </ul>
-
-        <h4>6. DATA RETENTION</h4>
-        <p>Personal data collected through this promotion will be retained for a period not exceeding one (1) year after the promotion ends, after which it will be securely deleted or anonymized. Receipt images will be deleted immediately after verification.</p>
-
-        <h4>7. YOUR RIGHTS</h4>
-        <p>As a data subject under the Data Privacy Act of 2012, you have the right to:</p>
-        <ul>
-          <li>Be informed of the processing of your personal data</li>
-          <li>Access your personal data</li>
-          <li>Object to the processing of your personal data</li>
-          <li>Erasure or blocking of your personal data</li>
-          <li>Lodge a complaint with the National Privacy Commission (NPC)</li>
-        </ul>
-
-        <h4>8. DATA SECURITY</h4>
-        <p>We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction.</p>
-
-        <h4>9. CONTACT</h4>
-        <p>For any privacy-related concerns or to exercise your rights, please contact us at: <strong><a href="mailto:subwaypromo.ph@gmail.com">subwaypromo.ph@gmail.com</a></strong></p>
-        <p>You may also file a complaint with the National Privacy Commission at <a href="https://www.privacy.gov.ph" target="_blank">www.privacy.gov.ph</a>.</p>
-      </div>
+    <section id="privacy" class="card fade-in">
+      <h3>Privacy Policy</h3>
+      <p style="font-size:.875rem;color:var(--color-text-muted);margin-top:.5rem;">
+        Your personal information is collected solely for the purpose of administering this promotion.
+        Data is stored securely and will not be shared with third parties except as required by law.
+        Receipt images are stored for verification purposes only and deleted after the campaign ends.
+        You may request deletion of your data by contacting us.
+      </p>
     </section>
 
   </main>
 
   <footer>
-    <div class="subway-brand" style="margin-bottom:.5rem;">
-      <img src="subway-logo.svg" alt="Subway" style="height:24px;width:auto;filter:brightness(0) invert(1);opacity:.7;">
-      <div>🇰🇷</div>
-    </div>
-    <div class="footer-brand">SUBWAY PROMO TRIP TO KOREA</div>
-    <p style="font-size:.8rem;color:rgba(255,255,255,.5);margin-top:.25rem;">© <span id="footerYear"></span> All rights reserved. &nbsp;|&nbsp; <a href="admin.html" style="color:rgba(255,255,255,.3);">Admin</a></p>
+    <div class="footer-brand">Subway Promo Trip to Korea</div>
+    <p>&copy; <span id="footerYear"></span> All rights reserved 2026. &nbsp;|&nbsp; <a href="admin.html">Admin</a></p>
   </footer>
 
   <script src="app.js"></script>
-  <script>
-    function toggleAccordion(bodyId, btn) {
-      const body = document.getElementById(bodyId);
-      const isOpen = body.classList.contains('open');
-      body.classList.toggle('open', !isOpen);
-      btn.classList.toggle('open', !isOpen);
-      btn.setAttribute('aria-expanded', !isOpen);
-    }
-    function openAccordion(bodyId) {
-      const body = document.getElementById(bodyId);
-      const btn = body.previousElementSibling;
-      body.classList.add('open');
-      btn.classList.add('open');
-      btn.setAttribute('aria-expanded', 'true');
-    }
-  </script>
 </body>
 </html>

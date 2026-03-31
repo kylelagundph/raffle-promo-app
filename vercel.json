@@ -6,6 +6,7 @@
     { "src": "frontend/*.js",   "use": "@vercel/static" },
     { "src": "frontend/*.svg",  "use": "@vercel/static" },
     { "src": "frontend/*.png",  "use": "@vercel/static" },
+    { "src": "frontend/*.jpg",  "use": "@vercel/static" },
     { "src": "backend/api/*.py","use": "@vercel/python" }
   ],
   "routes": [
@@ -16,6 +17,7 @@
     { "src": "/app.js",              "dest": "/frontend/app.js"     },
     { "src": "/subway-logo.svg",     "dest": "/frontend/subway-logo.svg" },
     { "src": "/subway-logo.png",     "dest": "/frontend/subway-logo.png" },
+    { "src": "/sample-receipt.jpg",  "dest": "/frontend/sample-receipt.jpg" },
     { "src": "/api/settings",        "dest": "/backend/api/settings.py" },
     { "src": "/api/submit",          "dest": "/backend/api/submit.py"   },
     { "src": "/api/admin/entries/([^/]+)", "dest": "/backend/api/admin.py" },
