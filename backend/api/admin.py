@@ -1,13 +1,14 @@
 """
 admin.py — Admin API endpoints
-GET  /api/admin/entries       — List/search entries
-GET  /api/admin/entries/csv   — Download CSV
-GET  /api/admin/stats         — Entry counts by status
-GET  /api/admin/settings      — Get all settings
-POST /api/admin/settings      — Update a setting
-POST /api/admin/login         — Verify admin password
-POST /api/admin/draw          — Run raffle draw
-GET  /api/admin/draws         — List past draws
+GET    /api/admin/entries              — List/search entries
+GET    /api/admin/entries/csv          — Download CSV
+DELETE /api/admin/entries/{entry_id}   — Delete any entry (any status)
+GET    /api/admin/stats                — Entry counts by status
+GET    /api/admin/settings             — Get all settings
+POST   /api/admin/settings             — Update a setting
+POST   /api/admin/login                — Verify admin password
+POST   /api/admin/draw                 — Run raffle draw
+GET    /api/admin/draws                — List past draws
 """
 
 import os
@@ -26,7 +27,7 @@ from typing import Optional
 from lib import db
 
 app = FastAPI()
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["GET","POST","DELETE","OPTIONS"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 
 def _auth(x_admin_password: Optional[str] = None) -> None:
@@ -72,6 +73,7 @@ async def list_entries(
     return {"entries": entries, "total": total, "limit": limit, "offset": offset}
 
 
+# ── CSV export ────────────────────────────────────────────────
 @app.get("/api/admin/entries/csv")
 async def export_csv(
     status:           Optional[str] = Query(None),
@@ -99,16 +101,15 @@ async def export_csv(
 # ── Delete entry ──────────────────────────────────────────────
 @app.delete("/api/admin/entries/{entry_id}")
 async def delete_entry(
-    entry_id: str,
+    entry_id:         str,
     x_admin_password: Optional[str] = Header(None),
 ):
+    """Permanently delete any entry regardless of verification status."""
     _auth(x_admin_password)
-    try:
-        client = db.get_client()
-        client.table("entries").delete().eq("id", entry_id).execute()
-        return {"success": True, "deleted": entry_id}
-    except Exception as e:
-        raise HTTPException(500, f"Failed to delete entry: {e}")
+    deleted = db.delete_entry(entry_id)
+    if not deleted:
+        raise HTTPException(404, "Entry not found.")
+    return {"success": True, "deleted_id": entry_id}
 
 
 # ── Settings ──────────────────────────────────────────────────
@@ -140,7 +141,7 @@ async def update_settings(
 # ── Raffle Draw ───────────────────────────────────────────────
 @app.get("/api/admin/draw/pool")
 async def draw_pool(x_admin_password: Optional[str] = Header(None)):
-    """Return all verified entries (names only) for the animated draw."""
+    """Return all verified (non-deleted) entries for the animated draw."""
     _auth(x_admin_password)
     entries = db.get_verified_entries_for_draw()
     return {
@@ -154,7 +155,7 @@ async def run_draw(
     body:             dict         = Body(default={}),
     x_admin_password: Optional[str] = Header(None),
 ):
-    """Pick a random winner from verified entries."""
+    """Pick a random winner from verified (non-deleted) entries."""
     _auth(x_admin_password)
     entries = db.get_verified_entries_for_draw()
     if not entries:

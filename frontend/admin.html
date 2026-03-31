@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard — Raffle Promo</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script defer src="/_vercel/insights/script.js"></script>
   <link rel="stylesheet" href="style.css">
   <style>
     /* ── Admin-specific styles ── */
@@ -95,6 +94,8 @@
     /* Admin form controls */
     .admin-input { background: #1e293b; border: 1px solid #334155; color: #e2e8f0; padding: .5rem .8rem; border-radius: 8px; font-size: .9rem; width: 100%; margin-bottom: .5rem; }
     .btn-admin-action { background: #3b82f6; color: #fff; border: none; padding: .5rem 1.2rem; border-radius: 8px; cursor: pointer; font-size: .875rem; font-weight: 600; }
+    .btn-delete { background: transparent; border: 1px solid #7f1d1d; color: #f87171; padding: .25rem .6rem; border-radius: 6px; cursor: pointer; font-size: .75rem; transition: all .2s; }
+    .btn-delete:hover { background: #7f1d1d; color: #fff; }
     .btn-logout { background: #7f1d1d; color: #fca5a5; border: none; padding: .4rem .9rem; border-radius: 8px; cursor: pointer; font-size: .85rem; }
   </style>
 </head>
@@ -336,11 +337,11 @@ async function loadEntries() {
 function renderEntries(entries) {
   const tbody = document.getElementById('entriesBody');
   if (!entries.length) {
-    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:#475569;padding:2rem;">No entries found.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#475569;padding:2rem;">No entries found.</td></tr>';
     return;
   }
   tbody.innerHTML = entries.map((e, i) => `
-    <tr id="row-${esc(e.id)}">
+    <tr>
       <td style="color:#475569;">${i+1}</td>
       <td><strong style="color:#f1f5f9;">${esc(e.name)}</strong></td>
       <td>${esc(e.email)}</td>
@@ -350,21 +351,9 @@ function renderEntries(entries) {
       <td><span class="badge badge-${e.verification_status}">${e.verification_status}</span></td>
       <td style="color:#64748b;font-size:.8rem;">${fmtDate(e.created_at)}</td>
       <td>${e.receipt_url ? `<a href="${esc(e.receipt_url)}" target="_blank" class="receipt-link">View 🧾</a>` : '–'}</td>
-      <td><button onclick="deleteEntry('${esc(e.id)}','${esc(e.name)}')" style="background:#7f1d1d;color:#fca5a5;border:none;padding:.3rem .7rem;border-radius:6px;cursor:pointer;font-size:.75rem;">Delete</button></td>
+      <td><button class="btn-delete" onclick="deleteEntry('${esc(e.id)}', '${esc(e.name)}')">🗑 Delete</button></td>
     </tr>
   `).join('');
-}
-
-async function deleteEntry(id, name) {
-  if (!confirm(`Delete entry for "${name}"? This cannot be undone.`)) return;
-  const r = await apiFetch(`/api/admin/entries/${id}`, 'DELETE');
-  if (r.ok) {
-    const row = document.getElementById(`row-${id}`);
-    if (row) row.remove();
-    loadStats();
-  } else {
-    alert('Failed to delete entry.');
-  }
 }
 
 async function downloadCSV() {
@@ -535,7 +524,25 @@ function fmtDate(isoStr) {
   try { return new Date(isoStr).toLocaleString('en-PH', {dateStyle:'short',timeStyle:'short'}); }
   catch { return isoStr; }
 }
+
+// ── Delete Entry ──────────────────────────────────────────────
+async function deleteEntry(id, name) {
+  if (!confirm(`Delete entry for "${name}"?\n\nThis is permanent and cannot be undone.`)) return;
+  try {
+    const r = await apiFetch(`/api/admin/entries/${id}`, 'DELETE');
+    if (r.ok) {
+      loadEntries();
+      loadStats();
+      loadDrawPool();
+    } else {
+      const d = await r.json().catch(() => ({}));
+      alert('Delete failed: ' + (d.detail || 'Unknown error'));
+    }
+  } catch(e) {
+    alert('Network error deleting entry.');
+  }
+}
+
 </script>
 </body>
 </html>
-<!-- v1774895442 -->

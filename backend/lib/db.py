@@ -93,6 +93,17 @@ def update_entry_verification(
     }).eq("id", entry_id).execute()
 
 
+def delete_entry(entry_id: str) -> bool:
+    """Hard-delete an entry by ID. Returns True if deleted, False if not found."""
+    client = get_client()
+    # Check it exists first
+    check = client.table("entries").select("id").eq("id", entry_id).limit(1).execute()
+    if not check.data:
+        return False
+    client.table("entries").delete().eq("id", entry_id).execute()
+    return True
+
+
 def get_entries(
     status: Optional[str] = None,
     limit: int = 100,
@@ -121,7 +132,7 @@ def count_entries(status: Optional[str] = None) -> int:
 
 
 def get_verified_entries_for_draw() -> List[Dict[str, Any]]:
-    """Return all verified entries eligible for raffle draw."""
+    """Return all verified entries eligible for raffle draw (excludes deleted entries)."""
     client = get_client()
     resp = client.table("entries").select(
         "id,name,email,phone,invoice_number,created_at"
