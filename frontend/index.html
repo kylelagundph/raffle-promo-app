@@ -141,28 +141,87 @@
       </div>
     </section>
 
-    <section id="terms" class="card fade-in">
-      <h3>Terms &amp; Conditions</h3>
-      <p style="font-size:.875rem;color:var(--color-text-muted);margin-top:.5rem;">
-        Multiple entries are allowed — each entry must have a unique OR/Invoice number.
-        Receipts must show a valid purchase date within the promo period and include at least one participating product.
-        Duplicate OR numbers will be automatically disqualified. Fraudulent entries will be disqualified.
-        Winner will be selected via random raffle draw at the end of the promo period.
-        Winner will be contacted via the email and phone number provided.
-        Prize is non-transferable and non-exchangeable for cash.
-        Promoter reserves the right to verify winner eligibility before awarding the prize.
-      </p>
+    <!-- Accordion styles -->
+    <style>
+      .accordion { border-radius: 12px; overflow: hidden; margin-bottom: 1rem; }
+      .accordion-header { width: 100%; background: var(--color-surface, #fff); border: 1px solid #e5e7eb; border-radius: 12px; padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1rem; font-weight: 700; color: var(--color-text, #111); transition: background .2s; }
+      .accordion-header:hover { background: #f9fafb; }
+      .accordion-header .acc-arrow { font-size: 1rem; transition: transform .3s; }
+      .accordion-header.open .acc-arrow { transform: rotate(180deg); }
+      .accordion-body { display: none; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 12px 12px; padding: 1.25rem; background: #fff; font-size: .875rem; color: var(--color-text-muted, #6b7280); line-height: 1.7; }
+      .accordion-body.open { display: block; }
+      .accordion-body h4 { font-size: .875rem; font-weight: 700; color: #111; margin: 1rem 0 .35rem; }
+      .accordion-body h4:first-child { margin-top: 0; }
+      .accordion-body ol { padding-left: 1.25rem; margin: .35rem 0; }
+      .accordion-body ol li { margin-bottom: .25rem; }
+      .acc-promo-title { font-weight: 700; margin-bottom: .15rem; }
+      .acc-promo-period { color: #6b7280; font-size: .82rem; margin-bottom: .75rem; }
+    </style>
+
+    <section id="terms" class="fade-in">
+      <button class="accordion-header" onclick="toggleAcc(this)" aria-expanded="false">
+        Terms &amp; Conditions <span class="acc-arrow">▼</span>
+      </button>
+      <div class="accordion-body">
+        <p class="acc-promo-title">SUBWAY® CHICKEN BULGOGI PROMO – TRIP TO KOREA</p>
+        <p class="acc-promo-period">Promotion Period: May 1, 2026 – August 31, 2026</p>
+
+        <h4>1. ELIGIBILITY</h4>
+        <p>This promotion is open to all residents of the Philippines who are at least 18 years of age at the time of entry. Employees of the Promoter, its affiliates, subsidiaries, advertising and promotion agencies, and their immediate family members are not eligible to participate.</p>
+
+        <h4>2. QUALIFYING PURCHASE</h4>
+        <p>To participate, a participant must purchase a Subway Chicken Bulgogi from any participating Subway outlet during the promotion period. The official receipt must clearly show the Chicken Bulgogi purchase, the date of purchase, and a valid 10-digit OR/Invoice number.</p>
+
+        <h4>3. HOW TO ENTER</h4>
+        <ol>
+          <li>Visit <strong>www.subwayph.promo</strong> during the promotion period.</li>
+          <li>Complete the online entry form with your full name, email address, mobile number, date of purchase, and OR/Invoice number.</li>
+          <li>Upload a clear photo of your official receipt showing the qualifying purchase.</li>
+          <li>Submit your entry and wait for verification.</li>
+        </ol>
+        <p>Multiple entries are allowed provided each entry uses a unique OR/Invoice number. One OR number = one entry.</p>
+
+        <h4>4. RECEIPT VERIFICATION</h4>
+        <p>All submitted receipts will be verified using automated OCR technology to confirm the presence of a qualifying Chicken Bulgogi purchase. Entries with receipts that do not meet verification requirements will be disqualified. The Promoter reserves the right to manually verify any entry.</p>
+
+        <h4>5. DUPLICATE AND FRAUDULENT ENTRIES</h4>
+        <p>Duplicate OR/Invoice numbers will be automatically disqualified. The submission of fraudulent, altered, or illegible receipts is strictly prohibited and will result in immediate disqualification. The Promoter reserves the right to pursue legal action against fraudulent participants.</p>
+
+        <h4>6. PRIZE</h4>
+        <p>One (1) winner will receive a trip to Korea for two (2) persons, inclusive of round-trip airfare, hotel accommodations, tour, and ₩250,000 Korean Won pocket money. The prize is non-transferable, non-refundable, and cannot be exchanged for cash. Travel dates are subject to availability and Promoter approval.</p>
+
+        <h4>7. WINNER SELECTION</h4>
+        <p>The winner will be selected through a random electronic draw from all verified entries at the end of the promotion period. The draw will be conducted in the presence of a duly authorized representative. The Promoter's decision is final and binding.</p>
+
+        <h4>8. WINNER NOTIFICATION</h4>
+        <p>The winner will be notified via the email address and mobile number provided at time of entry within seven (7) days from the draw date. Failure to respond within five (5) days of notification will result in forfeiture of the prize and an alternate winner may be selected.</p>
+
+        <h4>9. GOVERNING LAW</h4>
+        <p>This promotion is governed by the laws of the Republic of the Philippines. Any disputes shall be resolved under Philippine jurisdiction.</p>
+
+        <h4>10. DTI PERMIT</h4>
+        <p>DTI Fair Trade Permit No. <strong>[PERMIT NUMBER – TO BE UPDATED]</strong>.</p>
+      </div>
     </section>
 
-    <section id="privacy" class="card fade-in">
-      <h3>Privacy Policy</h3>
-      <p style="font-size:.875rem;color:var(--color-text-muted);margin-top:.5rem;">
-        Your personal information is collected solely for the purpose of administering this promotion.
-        Data is stored securely and will not be shared with third parties except as required by law.
-        Receipt images are stored for verification purposes only and deleted after the campaign ends.
-        You may request deletion of your data by contacting the promoter.
-      </p>
+    <section id="privacy" class="fade-in">
+      <button class="accordion-header" onclick="toggleAcc(this)" aria-expanded="false">
+        Privacy Policy <span class="acc-arrow">▼</span>
+      </button>
+      <div class="accordion-body">
+        <p>Your personal information is collected solely for the purpose of administering this promotion. Data is stored securely and will not be shared with third parties except as required by law. Receipt images are stored for verification purposes only and deleted after the campaign ends. You may request deletion of your data by contacting the promoter.</p>
+      </div>
     </section>
+
+    <script>
+      function toggleAcc(btn) {
+        const body = btn.nextElementSibling;
+        const isOpen = btn.classList.contains('open');
+        btn.classList.toggle('open', !isOpen);
+        body.classList.toggle('open', !isOpen);
+        btn.setAttribute('aria-expanded', !isOpen);
+      }
+    </script>
   </main>
 
   <footer>
