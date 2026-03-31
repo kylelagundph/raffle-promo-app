@@ -133,11 +133,80 @@
 
     <section class="card fade-in">
       <h2>How to Enter</h2>
-      <div class="steps-list">
-        <div class="step-item"><div class="step-circle">🛍️</div><div><strong>Make a qualifying purchase</strong><br><small>Buy the participating product</small></div></div>
-        <div class="step-item"><div class="step-circle">📱</div><div><strong>Fill in this form</strong><br><small>Enter your details and receipt info</small></div></div>
-        <div class="step-item"><div class="step-circle">🧾</div><div><strong>Upload your receipt</strong><br><small>Clear photo showing date and products</small></div></div>
-        <div class="step-item"><div class="step-circle">🎲</div><div><strong>Wait for the draw!</strong><br><small>Winners notified by email and phone</small></div></div>
+      <style>
+        .how-steps { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1rem; }
+        .how-step { display: flex; align-items: center; gap: 1rem; }
+        .how-icon { width: 56px; height: 56px; border-radius: 50%; background: #16a34a; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .how-icon svg { width: 28px; height: 28px; fill: #fff; }
+        .how-text strong { display: block; font-size: 1rem; color: #111; margin-bottom: .15rem; }
+        .how-text small { color: #6b7280; font-size: .875rem; }
+      </style>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="how-icon">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <!-- Burger icon -->
+              <rect x="8" y="14" width="48" height="8" rx="4"/>
+              <rect x="8" y="26" width="48" height="6" rx="3" fill="#fbbf24"/>
+              <rect x="8" y="36" width="48" height="6" rx="3" fill="#fbbf24"/>
+              <rect x="8" y="46" width="48" height="6" rx="3"/>
+            </svg>
+          </div>
+          <div class="how-text">
+            <strong>Buy a Subway Chicken Bulgogi</strong>
+            <small>At any participating Subway outlet</small>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-icon">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <!-- Phone/form icon -->
+              <rect x="18" y="6" width="28" height="52" rx="5"/>
+              <rect x="23" y="14" width="18" height="3" rx="1.5" fill="#16a34a"/>
+              <rect x="23" y="21" width="18" height="3" rx="1.5" fill="#16a34a"/>
+              <rect x="23" y="28" width="12" height="3" rx="1.5" fill="#16a34a"/>
+              <circle cx="32" cy="48" r="3" fill="#16a34a"/>
+            </svg>
+          </div>
+          <div class="how-text">
+            <strong>Fill in this form</strong>
+            <small>Enter your details and receipt info</small>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-icon">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <!-- Receipt icon -->
+              <rect x="14" y="6" width="36" height="52" rx="3"/>
+              <rect x="20" y="16" width="24" height="3" rx="1.5" fill="#16a34a"/>
+              <rect x="20" y="23" width="24" height="3" rx="1.5" fill="#16a34a"/>
+              <rect x="20" y="30" width="16" height="3" rx="1.5" fill="#16a34a"/>
+              <polyline points="20,42 26,48 44,30" stroke="#16a34a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+          <div class="how-text">
+            <strong>Upload your receipt</strong>
+            <small>Clear photo showing Chicken Bulgogi and OR number</small>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-icon">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <!-- Trophy icon -->
+              <path d="M20 8 h24 v20 a12 12 0 0 1-24 0 Z"/>
+              <rect x="28" y="40" width="8" height="8" rx="1"/>
+              <rect x="20" y="48" width="24" height="5" rx="2"/>
+              <path d="M20 14 h-8 a8 8 0 0 0 8 14" fill="#fff" opacity="0.3"/>
+              <path d="M44 14 h8 a8 8 0 0 1-8 14" fill="#fff" opacity="0.3"/>
+              <circle cx="32" cy="24" r="4" fill="#fbbf24"/>
+              <polygon points="32,20 33.5,23 37,23 34.5,25 35.5,28.5 32,26.5 28.5,28.5 29.5,25 27,23 30.5,23" fill="#fbbf24"/>
+            </svg>
+          </div>
+          <div class="how-text">
+            <strong>Wait for the draw!</strong>
+            <small>Winner notified by email and phone</small>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -209,7 +278,55 @@
         Privacy Policy <span class="acc-arrow">▼</span>
       </button>
       <div class="accordion-body">
-        <p>Your personal information is collected solely for the purpose of administering this promotion. Data is stored securely and will not be shared with third parties except as required by law. Receipt images are stored for verification purposes only and deleted after the campaign ends. You may request deletion of your data by contacting the promoter.</p>
+        <p>This Privacy Policy is issued in compliance with Republic Act No. 10173, otherwise known as the <strong>Data Privacy Act of 2012</strong> of the Philippines, and its Implementing Rules and Regulations.</p>
+
+        <h4>1. DATA CONTROLLER</h4>
+        <p>The Promoter acts as the Personal Information Controller (PIC) for all personal data collected through this promotion.</p>
+
+        <h4>2. PERSONAL DATA COLLECTED</h4>
+        <ul style="padding-left:1.25rem;margin:.35rem 0;">
+          <li>Full name</li>
+          <li>Email address</li>
+          <li>Mobile number</li>
+          <li>Date of purchase</li>
+          <li>OR/Invoice number</li>
+          <li>Receipt image</li>
+        </ul>
+
+        <h4>3. PURPOSE OF COLLECTION</h4>
+        <p>Your data is collected and processed solely for the following purposes:</p>
+        <ul style="padding-left:1.25rem;margin:.35rem 0;">
+          <li>To validate your entry and verify your qualifying purchase</li>
+          <li>To administer the raffle draw and select a winner</li>
+          <li>To notify the winner and facilitate prize delivery</li>
+          <li>To comply with legal and regulatory requirements</li>
+        </ul>
+
+        <h4>4. LEGAL BASIS</h4>
+        <p>Processing of your personal data is based on your consent, which is given upon submission of your entry, and is necessary for the performance of our obligations under this promotion.</p>
+
+        <h4>5. DATA SHARING</h4>
+        <p>Your personal data will not be sold, rented, or shared with third parties for marketing purposes. Data may be shared only with:</p>
+        <ul style="padding-left:1.25rem;margin:.35rem 0;">
+          <li>Service providers engaged to administer this promotion (under strict confidentiality obligations)</li>
+          <li>Government authorities as required by law</li>
+        </ul>
+
+        <h4>6. DATA RETENTION</h4>
+        <p>Personal data collected through this promotion will be retained for a period not exceeding one (1) year after the promotion ends, after which it will be securely deleted or anonymized. Receipt images will be deleted immediately after verification.</p>
+
+        <h4>7. YOUR RIGHTS</h4>
+        <p>As a data subject under the Data Privacy Act of 2012, you have the right to:</p>
+        <ul style="padding-left:1.25rem;margin:.35rem 0;">
+          <li>Be informed of the processing of your personal data</li>
+          <li>Access your personal data</li>
+          <li>Object to the processing of your personal data</li>
+          <li>Erasure or blocking of your personal data</li>
+          <li>Lodge a complaint with the National Privacy Commission (NPC)</li>
+        </ul>
+
+        <h4>8. DATA SECURITY</h4>
+        <p>We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction.</p>
       </div>
     </section>
 
