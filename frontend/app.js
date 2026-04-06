@@ -205,7 +205,7 @@ if (form) {
           document.getElementById('successEntryId').textContent = `Entry ID: ${data.entry_id}`;
         }
       } else {
-        showAlert(data.detail || 'Something went wrong. Please try again.', 'error');
+        showAlert(data.detail || 'Receipt is incorrect or not valid. Please Try Again.', 'error');
       }
     } catch (err) {
       showAlert('Network error. Please check your connection and try again.', 'error');
