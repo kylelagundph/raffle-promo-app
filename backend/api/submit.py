@@ -53,14 +53,15 @@ def _validate_purchase_date(date_str: str) -> str:
         settings = db.get_settings()
         start = datetime.date.fromisoformat(settings.get("campaign_start_date", "2026-05-01"))
         end   = datetime.date.fromisoformat(settings.get("campaign_end_date",   "2026-08-31"))
-if d < start:
-    raise ValueError(f"Purchase date is before the promo period (starts {start}).")
-if d > end:
-    raise ValueError(f"Purchase date is after the promo period (ends {end}).")
-    except ValueError as e:
-        if "Invalid isoformat" in str(e):
+        if d < start:
+            raise ValueError(f"Purchase date is before the promo period (starts {start}).")
+        if d > end:
+            raise ValueError(f"Purchase date is after the promo period (ends {end}).")
+        return date_str
+        except ValueError as e:
+            if "Invalid isoformat" in str(e):
             raise ValueError("Invalid date format. Use YYYY-MM-DD.")
-        raise
+            raise
 
 
 @app.post("/api/submit")
