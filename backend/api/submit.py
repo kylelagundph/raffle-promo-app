@@ -58,10 +58,10 @@ def _validate_purchase_date(date_str: str) -> str:
         if d > end:
             raise ValueError(f"Purchase date is after the promo period (ends {end}).")
         return date_str
-        except ValueError as e:
-            if "Invalid isoformat" in str(e):
+    except ValueError as e:
+        if "Invalid isoformat" in str(e):
             raise ValueError("Invalid date format. Use YYYY-MM-DD.")
-            raise
+        raise
 
 
 @app.post("/api/submit")
