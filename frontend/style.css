@@ -568,3 +568,29 @@ footer a:hover { color: var(--subway-green); }
 /* ── Alert types ─────────────────────────────────────────────── */
 .alert-error   { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
 .alert-success { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+/* Fix prize layout */
+.prize-item {
+  display: block; /* override flex */
+}
+
+.prize-title {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.prize-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.prize-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.5;
+}
+
+.icon {
+  font-size: 18px;
+}
