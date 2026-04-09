@@ -29,7 +29,7 @@ async function loadSettings() {
     if (s.promo_title) {
       document.title = s.promo_title + ' 🇰🇷';
       const h1 = document.querySelector('.hero-content h1');
-      if (h1) h1.innerHTML = s.promo_title.replace('Korea', '<span class="korea-text">Korea!</span>');
+      if (h1) h1.textContent = s.promo_title;
     }
     if (s.campaign_start_date && s.campaign_end_date) {
       const start = formatDate(s.campaign_start_date);
