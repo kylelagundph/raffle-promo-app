@@ -26,11 +26,6 @@ async function loadSettings() {
     if (!r.ok) return;
     const s = await r.json();
 
-    if (s.promo_title) {
-      document.title = s.promo_title + ' 🇰🇷';
-      const h1 = document.querySelector('.hero-content h1');
-      if (h1) h1.textContent = s.promo_title;
-    }
     if (s.campaign_start_date && s.campaign_end_date) {
       const start = formatDate(s.campaign_start_date);
       const end   = formatDate(s.campaign_end_date);
