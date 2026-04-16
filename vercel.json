@@ -11,9 +11,11 @@
   ],
   "routes": [
     { "src": "/",                    "dest": "/frontend/index.html" },
+    
     { "src": "/favicon.ico", "dest": "/frontend/favicon.ico" },
     { "src": "/favicon-32x32.png", "dest": "/frontend/favicon-32x32.png" },
-    { "src": "/favicon-16x16.png", "dest": "/frontend/favicon-16x16.png" }
+    { "src": "/favicon-16x16.png", "dest": "/frontend/favicon-16x16.png" },
+    
     { "src": "/admin",               "dest": "/frontend/admin.html" },
     { "src": "/admin.html",          "dest": "/frontend/admin.html" },
     { "src": "/style.css",           "dest": "/frontend/style.css"  },
