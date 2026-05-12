@@ -151,6 +151,7 @@
             <tr>
               <th>#</th>
               <th>Name</th>
+              <th>Home Address</th>
               <th>Email</th>
               <th>Phone</th>
               <th>Date of Purchase</th>
@@ -162,7 +163,7 @@
             </tr>
           </thead>
           <tbody id="entriesBody">
-            <tr><td colspan="9" style="text-align:center;color:#475569;padding:2rem;">Loading…</td></tr>
+            <tr><td colspan="11" style="text-align:center;color:#475569;padding:2rem;">Loading…</td></tr>
           </tbody>
         </table>
       </div>
@@ -330,20 +331,21 @@ async function loadEntries() {
     const count = document.getElementById('entryCount');
     if (count) count.textContent = `Showing ${(d.entries||[]).length} of ${d.total} entries`;
   } catch(e) {
-    document.getElementById('entriesBody').innerHTML = '<tr><td colspan="9" style="text-align:center;color:#f87171;">Failed to load entries.</td></tr>';
+    document.getElementById('entriesBody').innerHTML = '<tr><td colspan="11" style="text-align:center;color:#f87171;">Failed to load entries.</td></tr>';
   }
 }
 
 function renderEntries(entries) {
   const tbody = document.getElementById('entriesBody');
   if (!entries.length) {
-    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#475569;padding:2rem;">No entries found.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;color:#475569;padding:2rem;">No entries found.</td></tr>';
     return;
   }
   tbody.innerHTML = entries.map((e, i) => `
     <tr>
       <td style="color:#475569;">${i+1}</td>
       <td><strong style="color:#f1f5f9;">${esc(e.name)}</strong></td>
+      <td style="max-width:260px;white-space:normal;">${esc(e.home_address || '–')}</td>
       <td>${esc(e.email)}</td>
       <td>${esc(e.phone)}</td>
       <td>${e.purchase_date || '–'}</td>
