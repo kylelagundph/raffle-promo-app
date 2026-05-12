@@ -82,7 +82,7 @@ async def submit_entry(
         
     home_address = home_address.strip()
     if not home_address or len(home_address) < 10:
-    raise HTTPException(422, "Please enter your complete home address.")
+        raise HTTPException(422, "Please enter your complete home address.")
 
     try:
         email = _validate_email(email)
