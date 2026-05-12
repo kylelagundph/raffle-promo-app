@@ -67,6 +67,7 @@ def _validate_purchase_date(date_str: str) -> str:
 @app.post("/api/submit")
 async def submit_entry(
     name:           str        = Form(...),
+    home_address:   str        = Form(...),
     email:          str        = Form(...),
     phone:          str        = Form(...),
     purchase_date:  str        = Form(...),
@@ -78,6 +79,10 @@ async def submit_entry(
     name = name.strip()
     if not name or len(name) < 2:
         raise HTTPException(422, "Please enter your full name.")
+        
+    home_address = home_address.strip()
+    if not home_address or len(home_address) < 10:
+    raise HTTPException(422, "Please enter your complete home address.")
 
     try:
         email = _validate_email(email)
@@ -130,15 +135,16 @@ async def submit_entry(
 
     # 6. Create entry in DB
     try:
-        entry = db.create_entry(
+         entry = db.create_entry(
             name=name,
+            home_address=home_address,
             email=email,
             phone=phone,
             purchase_date=purchase_date,
             invoice_number=invoice_number,
             receipt_url=receipt_url,
             receipt_hash=receipt_hash,
-        )
+    )
     except Exception as e:
         raise HTTPException(500, f"Database error: {e}")
 
