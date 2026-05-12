@@ -126,14 +126,15 @@ if (invoiceInput) {
 
 // ── Steps indicator ───────────────────────────────────────────
 function updateSteps() {
-  const name    = document.getElementById('name')?.value.trim();
-  const email   = document.getElementById('email')?.value.trim();
-  const phone   = document.getElementById('phone')?.value.trim();
-  const invoice = document.getElementById('invoice_number')?.value.trim();
-  const date_v  = document.getElementById('purchase_date')?.value.trim();
-  const file    = receiptInput?.files[0];
+   const name    = document.getElementById('name')?.value.trim();
+   const homeAddress = document.getElementById('home_address')?.value.trim();
+   const email   = document.getElementById('email')?.value.trim();
+   const phone   = document.getElementById('phone')?.value.trim();
+   const invoice = document.getElementById('invoice_number')?.value.trim();
+   const date_v  = document.getElementById('purchase_date')?.value.trim();
+   const file    = receiptInput?.files[0];
 
-  if (name && email && phone && invoice && date_v) {
+if (name && homeAddress && email && phone && invoice && date_v) {
     document.getElementById('step1')?.classList.add('done');
     document.getElementById('step2')?.classList.add('active');
   }
@@ -142,7 +143,7 @@ function updateSteps() {
   }
 }
 
-['name','email','phone','invoice_number','purchase_date'].forEach(id => {
+['name','home_address','email','phone','invoice_number','purchase_date'].forEach(id => {
   document.getElementById(id)?.addEventListener('input', updateSteps);
 });
 
@@ -177,14 +178,15 @@ if (form) {
 
     setLoading(true);
 
-    const fd = new FormData();
-    fd.append('name',           document.getElementById('name').value.trim());
-    fd.append('email',          document.getElementById('email').value.trim());
-    fd.append('phone',          getFullPhone());
-    fd.append('purchase_date',  dateVal);
-    fd.append('invoice_number', invoiceVal);
-    fd.append('consent',        document.getElementById('consent').checked ? 'true' : 'false');
-    fd.append('receipt',        receiptInput.files[0]);
+const fd = new FormData();
+fd.append('name',           document.getElementById('name').value.trim());
+fd.append('home_address',   document.getElementById('home_address').value.trim());
+fd.append('email',          document.getElementById('email').value.trim());
+fd.append('phone',          getFullPhone());
+fd.append('purchase_date',  dateVal);
+fd.append('invoice_number', invoiceVal);
+fd.append('consent',        document.getElementById('consent').checked ? 'true' : 'false');
+fd.append('receipt',        receiptInput.files[0]);
 
     try {
       const r = await fetch(`${API_BASE}/api/submit`, { method: 'POST', body: fd });
