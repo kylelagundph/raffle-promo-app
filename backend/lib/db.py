@@ -52,6 +52,7 @@ def update_setting(key: str, value: str) -> None:
 
 def create_entry(
     name: str,
+    home_address: str,
     email: str,
     phone: str,
     purchase_date: Optional[str],
@@ -61,15 +62,16 @@ def create_entry(
 ) -> Dict[str, Any]:
     client = get_client()
     resp = client.table("entries").insert({
-        "name":           name,
-        "email":          email,
-        "phone":          phone,
-        "purchase_date":  purchase_date,
-        "invoice_number": invoice_number.strip() if invoice_number else None,
-        "receipt_url":    receipt_url,
-        "receipt_hash":   receipt_hash,
-        "verification_status": "pending",
-    }).execute()
+    "name":           name,
+    "home_address":   home_address,
+    "email":          email,
+    "phone":          phone,
+    "purchase_date":  purchase_date,
+    "invoice_number": invoice_number.strip() if invoice_number else None,
+    "receipt_url":    receipt_url,
+    "receipt_hash":   receipt_hash,
+    "verification_status": "pending",
+}).execute()
 
     if not resp.data:
         raise RuntimeError("Failed to create entry.")
@@ -124,9 +126,9 @@ def get_entries(
 ) -> List[Dict[str, Any]]:
     client = get_client()
     query = client.table("entries").select(
-        "id,name,email,phone,purchase_date,invoice_number,"
+        "id,name,home_address,email,phone,purchase_date,invoice_number,"
         "receipt_url,verification_status,rejection_reason,created_at"
-    ).order("created_at", desc=True).limit(limit).offset(offset)
+).order("created_at", desc=True).limit(limit).offset(offset)
 
     if status:
         query = query.eq("verification_status", status)
