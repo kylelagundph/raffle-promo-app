@@ -114,12 +114,6 @@ async def submit_entry(
     except ValueError as e:
         raise HTTPException(422, str(e))
 
-    # 3. Check duplicate invoice number FIRST (fast check)
-    try:
-        fraud.check_duplicate_invoice(invoice_number)
-    except fraud.FraudError as e:
-        raise HTTPException(409, str(e))
-
     # 4. Compute MD5 hash for storage reference (no longer used for duplicate blocking)
     receipt_hash = storage.compute_md5(receipt_bytes)
 
