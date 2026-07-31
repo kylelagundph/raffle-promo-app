@@ -323,7 +323,7 @@ async function loadStats() {
 // ── Entries ───────────────────────────────────────────────────
 async function loadEntries() {
   const status = document.getElementById('statusFilter')?.value || '';
-  const url = `/api/admin/entries?limit=200${status ? '&status=' + status : ''}`;
+  const url = `/api/admin/entries?limit=2000${status ? '&status=' + status : ''}`;
   try {
     const r = await apiFetch(url);
     const d = await r.json();
