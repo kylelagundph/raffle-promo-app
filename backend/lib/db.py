@@ -125,6 +125,41 @@ def get_entries(
     offset: int = 0,
 ) -> List[Dict[str, Any]]:
     client = get_client()
+
+    all_entries: List[Dict[str, Any]] = []
+    page_size = 1000
+    current_offset = offset
+    remaining = limit
+
+    while remaining > 0:
+        batch_size = min(page_size, remaining)
+
+        query = (
+            client.table("entries")
+            .select(
+                "id,name,home_address,email,phone,purchase_date,invoice_number,"
+                "receipt_url,verification_status,rejection_reason,created_at"
+            )
+            .order("created_at", desc=True)
+            .range(current_offset, current_offset + batch_size - 1)
+        )
+
+        if status:
+            query = query.eq("verification_status", status)
+
+        resp = query.execute()
+        batch = resp.data or []
+
+        all_entries.extend(batch)
+
+        if len(batch) < batch_size:
+            break
+
+        current_offset += batch_size
+        remaining -= batch_size
+
+    return all_entries
+    client = get_client()
     query = client.table("entries").select(
         "id,name,home_address,email,phone,purchase_date,invoice_number,"
         "receipt_url,verification_status,rejection_reason,created_at"
@@ -149,10 +184,29 @@ def count_entries(status: Optional[str] = None) -> int:
 def get_verified_entries_for_draw() -> List[Dict[str, Any]]:
     """Return all verified entries eligible for raffle draw."""
     client = get_client()
-    resp = client.table("entries").select(
-        "id,name,email,phone,invoice_number,created_at"
-    ).eq("verification_status", "verified").execute()
-    return resp.data or []
+
+    all_entries: List[Dict[str, Any]] = []
+    page_size = 1000
+    offset = 0
+
+    while True:
+        resp = (
+            client.table("entries")
+            .select("id,name,email,phone,invoice_number,created_at")
+            .eq("verification_status", "verified")
+            .range(offset, offset + page_size - 1)
+            .execute()
+        )
+
+        batch = resp.data or []
+        all_entries.extend(batch)
+
+        if len(batch) < page_size:
+            break
+
+        offset += page_size
+
+    return all_entries
 
 
 def check_invoice_exists(invoice_number: str) -> bool:
