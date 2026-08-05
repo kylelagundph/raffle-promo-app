@@ -83,10 +83,10 @@ async def export_csv(
     entries = db.get_entries(status=status, limit=10000, offset=0)
 
     output = io.StringIO()
-writer = csv.DictWriter(output, fieldnames=[
+    writer = csv.DictWriter(output, fieldnames=[
     "id", "name", "email", "phone", "address", "purchase_date",
     "invoice_number", "verification_status", "rejection_reason", "created_at"
-], extrasaction="ignore")
+    ], extrasaction="ignore")
     writer.writeheader()
     writer.writerows(entries)
     output.seek(0)
